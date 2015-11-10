@@ -1,4 +1,3 @@
-{assign var="uiMessages" value=$uiMessages|default: null}
 {block name="ui-messages"}
 	{if !empty($uiMessages)}
 		<div id="messages" class="container">

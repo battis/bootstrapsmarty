@@ -1,21 +1,47 @@
 <?php
 /** NotificationMessage and related classes */
 
+namespace Battis\BootstrapSmarty;
+
 /**
  * A notification message for the user
  *
- * @author Seth Battis <SethBattis@stmarksschool.org>
+ * @author Seth Battis <seth@battis.net>
  **/
 class NotificationMessage {
 
 	/** Default CSS class selector for message */
-	const MESSAGE = 'message';
+	const INFO = 'alert-info';
+		
+	/**
+	 * Alias for INFO
+	 *
+	 * @deprecated Use `INFO` instead for consistency with Bootstrap
+	 **/
+	const MESSAGE = 'alert-info';
 	
 	/** CSS class selector for an error message */
-	const ERROR = 'error';
+	const DANGER = 'alert-danger';
+	
+	/**
+	 * Alias for DANGER
+	 *
+	 * @deprecated Use `DANGER` instead for consistency with Bootstrap
+	 **/
+	const ERROR = 'alert-danger';
 	
 	/** CSS class selector for a "good" (indiciating successful operation) message */
-	const GOOD = 'good';
+	const SUCCESS = 'alert-success';
+	
+	/**
+	 * Alias for SUCCESS
+	 *
+	 * @deprecated Use `SUCCESS` instead for consistency with Bootstrap
+	 **/
+	const GOOD = 'alert-success';
+	
+	/** CSS class selector for an important message */
+	const WARNING = 'alert-warning';
 	
 	/** @var string $title HTML-formatted title of the message */
 	public $title = null;
@@ -27,6 +53,30 @@ class NotificationMessage {
 	public $class = self::MESSAGE;
 	
 	/**
+	 * Add Bootstrap Alert-link styling to links in the notification
+	 *
+	 * One annoying side-effect is that the HTML content will be re-wrapped in
+	 * another `<div>` tag, just to ensure that `SimpleXML` can parse it.
+	 *
+	 * @param string $html The HTML content to be modified
+	 *
+	 * @return string All links in `$html` will be updated to include the `alert-link` selector class
+	 **/
+	private static function styleAlertLinks($html) {
+		$xml = simplexml_load_string("<div>$html</div>");
+		$anchors = $xml->xpath('//a');
+		for($i = 0; $i < count($anchors); $i++) {
+			if (isset($anchors[$i]->attributes()->class)) {
+				/* this is dumb, but it appears that the concatenate-assignment operator (`.=`) doesn't work here */
+				$anchors[$i]->attributes()->class = $anchors[$i]->attributes()->class . ' alert-link';
+			} else {
+				$anchors[$i]->addAttribute('class', 'alert-link');
+			}
+		}
+		return $xml->asXml();
+	}
+	
+	/**
 	 * Construct a new notification message
 	 *
 	 * @param string $title
@@ -35,9 +85,9 @@ class NotificationMessage {
 	 *
 	 * @return void
 	 **/
-	public function __construct($title, $content, $class = self::MESSAGE) {
-		$this->title = $title;
-		$this->content = $content;
+	public function __construct($title, $content, $class = self::INFO) {
+		$this->title = NotificationMessage::styleAlertLinks($title);
+		$this->content = NotificationMessage::styleAlertLinks($content);
 		$this->class = $class;
 	}
 }

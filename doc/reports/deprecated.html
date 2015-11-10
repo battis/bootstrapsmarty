@@ -36,10 +36,18 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <i class="icon-ellipsis-vertical"></i>
             </a>
-            <a class="brand" href="../index.html">StMarksSmarty</a>
+            <a class="brand" href="../index.html">BootstrapSmarty</a>
 
             <div class="nav-collapse">
                 <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Battis.html">\Battis</a></li>
+                                                    </ul>
+                    </li>
                                         <li class="dropdown" id="charts-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Charts <b class="caret"></b>
@@ -59,17 +67,17 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">7</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">1</span>
+                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">2</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/deprecated.html">
-                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">3</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">6</span>
                                 </a>
                             </li>
                         </ul>
@@ -89,7 +97,8 @@
         <div class="span2 sidebar">
             <ul class="side-nav nav nav-list">
                 <li class="nav-header">Navigation</li>
-                                                            <li><a href="#StMarksSmarty.php"><i class="icon-file"></i> StMarksSmarty.php</a></li>
+                                                            <li><a href="#BootstrapSmarty.php"><i class="icon-file"></i> BootstrapSmarty.php</a></li>
+                                                                                                                                                                                                                    <li><a href="#NotificationMessage.php"><i class="icon-file"></i> NotificationMessage.php</a></li>
                                                                                                                                                                                     </ul>
         </div>
 
@@ -100,10 +109,10 @@
             </ul>
 
             <div id="marker-accordion">
-                                                                            <a name="StMarksSmarty.php" id="StMarksSmarty.php"></a>
+                                                                            <a name="BootstrapSmarty.php" id="BootstrapSmarty.php"></a>
                     <h3>
                         <i class="icon-file"></i>
-                        StMarksSmarty.php
+                        BootstrapSmarty.php
                         <small style="float: right;padding-right: 10px;">1</small>
                     </h3>
                     <div>
@@ -114,19 +123,49 @@
                                 <th>Description</th>
                             </tr>
                                                                                 <tr>
-                                    <td>\StMarksSmarty::__construct()</td>
-                                    <td>242</td>
-                                    <td>Use singleton pattern StMarksSmarty::getSmarty()</td>
+                                    <td>\Battis\BootstrapSmarty\BootstrapSmarty::__construct()</td>
+                                    <td>241</td>
+                                    <td>Use singleton pattern BootstrapSmarty::getSmarty()</td>
                                 </tr>
                                                                                                                                                 <tr>
-                                    <td>\StMarksSmarty::__clone()</td>
-                                    <td>307</td>
-                                    <td>Use singleton pattern StMarksSmarty::getSmarty()</td>
+                                    <td>\Battis\BootstrapSmarty\BootstrapSmarty::__clone()</td>
+                                    <td>294</td>
+                                    <td>Use singleton pattern BootstrapSmarty::getSmarty()</td>
                                 </tr>
                                                                                                                                                 <tr>
-                                    <td>\StMarksSmarty::__wakeup()</td>
-                                    <td>325</td>
-                                    <td>Use singleton pattern StMarksSmarty::getSmarty()</td>
+                                    <td>\Battis\BootstrapSmarty\BootstrapSmarty::__wakeup()</td>
+                                    <td>312</td>
+                                    <td>Use singleton pattern BootstrapSmarty::getSmarty()</td>
+                                </tr>
+                                                                                                                                </table>
+                    </div>
+                                        <a name="NotificationMessage.php" id="NotificationMessage.php"></a>
+                    <h3>
+                        <i class="icon-file"></i>
+                        NotificationMessage.php
+                        <small style="float: right;padding-right: 10px;">1</small>
+                    </h3>
+                    <div>
+                        <table class="table markers table-bordered">
+                            <tr>
+                                <th>Element</th>
+                                <th>Line</th>
+                                <th>Description</th>
+                            </tr>
+                                                                                <tr>
+                                    <td>\Battis\BootstrapSmarty\NotificationMessage::MESSAGE</td>
+                                    <td>21</td>
+                                    <td>Use `INFO` instead for consistency with Bootstrap</td>
+                                </tr>
+                                                                                                                                                <tr>
+                                    <td>\Battis\BootstrapSmarty\NotificationMessage::ERROR</td>
+                                    <td>31</td>
+                                    <td>Use `DANGER` instead for consistency with Bootstrap</td>
+                                </tr>
+                                                                                                                                                <tr>
+                                    <td>\Battis\BootstrapSmarty\NotificationMessage::GOOD</td>
+                                    <td>41</td>
+                                    <td>Use `SUCCESS` instead for consistency with Bootstrap</td>
                                 </tr>
                                                                                     </table>
                 </div>
@@ -143,6 +182,7 @@
                                                         <h1><i class="icon-code"></i></h1>
                             <div>
                                 <ul>
+                                                                            <li><a href="../namespaces/Battis.html">\Battis</a></li>
                                                                     </ul>
                             </div>
                         </section>
@@ -172,7 +212,7 @@
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
                     on 
 Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in phar:///Users/sethbattis/Dropbox/Library/Scripts/phpdocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 89
-July 27th, 2015 at 16:49.
+November 10th, 2015 at 20:11.
                 </section>
             </section>
         </section>

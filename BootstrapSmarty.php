@@ -1,16 +1,21 @@
 <?php
 
-/** StMarksSmarty and related classes */
+/** BootstrapSmarty and related classes */
+
+namespace Battis\BootstrapSmarty;
+
+use Battis\DataUtilities;
 
 /**
- * A wrapper for Smarty to set (and maintain) defaults
+ * A wrapper for Smarty to set (and maintain) defaults within a Bootstrap
+ * UI environment
  *
- * @author Seth Battis <SethBattis@stmarksschool.org>
+ * @author Seth Battis <seth@battis.net>
  **/
-final class StMarksSmarty extends Smarty {
+final class BootstrapSmarty extends Smarty {
 
 	/**
-	 * @var StMarksSmarty|NULL Reference to the singleton StMarksSmarty
+	 * @var BootstrapSmarty|NULL Reference to the singleton BootstrapSmarty
 	 *		instance
 	 **/
 	private static $singleton = null;
@@ -23,32 +28,36 @@ final class StMarksSmarty extends Smarty {
 	const APP_KEY = 'app';
 
 	/**
-	 * Default key for StMarksSmarty-specified entry in lists of template and
+	 * Default key for BootstrapSmarty-specified entry in lists of template and
 	 * config directories
 	 **/
-	const UI_KEY = 'StMarksSmarty';
+	const UI_KEY = 'BootstrapSmarty';
+	
+	
+	/** Module name for eternicode/bootstrap-datepicker */
+	const MODULE_DATEPICKER = 'eternicode/bootstrap-datepicker';
 
 
 	/**
-	 * @var string[] Directory used by StMarksSmarty for base
+	 * @var string[] Directory used by BootstrapSmarty for base
 	 *		templates (always included in template directories list)
 	 **/
 	private $uiTemplateDir = null;
 	
 	/**
-	 * @var string[] Directory used by StMarksSmarty for base configs
+	 * @var string[] Directory used by BootstrapSmarty for base configs
 	 *		(always included in config directories list)
 	 **/
 	private $uiConfigDir = null;
 	
 	/**
-	 * @var string Default directory used by StMarksSmarty for
+	 * @var string Default directory used by BootstrapSmarty for
 	 *		compiled templates (can be overridden)
 	 **/
 	private $uiCompileDir = null;
 	
 	/**
-	 * @var string Default directory used by StMarksSmarty for cache
+	 * @var string Default directory used by BootstrapSmarty for cache
 	 *		files (can be overriden)
 	 **/
 	private $uiCacheDir = null;
@@ -70,12 +79,6 @@ final class StMarksSmarty extends Smarty {
 	private $minimalMetadata = array();
 	
 	/**
-	 * @var boolean Whether or not this app is displayed within an
-	 *		IFRAME, determines base stylesheet (defaults to false)
-	 **/
-	private $isFramed = false;
-	
-	/**
 	 * Test a file systems directory for writeability by the Apache user
 	 *
 	 * Note that this method throws an exception _rather than_ returning false, as
@@ -88,7 +91,7 @@ final class StMarksSmarty extends Smarty {
 	 *
 	 * @return boolean TRUE if the directory is writeable
 	 *
-	 * @throws StMarksSmarty_Exception UNWRITABLE_DIRECTORY If the directory is not
+	 * @throws BootstrapSmarty_Exception UNWRITABLE_DIRECTORY If the directory is not
 	 *		writeable
 	 **/
 	private static function testWriteableDirectory($directory) {
@@ -106,9 +109,9 @@ final class StMarksSmarty extends Smarty {
 		}
 		
 		if (!$success) {
-			throw new StMarksSmarty_Exception(
+			throw new BootstrapSmarty_Exception(
 				"The directory '{$directory}' cannot be created or cannot be made writeable",
-				StMarksSmarty_Exception::UNWRITABLE_DIRECTORY
+				BootstrapSmarty_Exception::UNWRITABLE_DIRECTORY
 			);
 		}
 	}
@@ -126,9 +129,9 @@ final class StMarksSmarty extends Smarty {
 	 *
 	 * @return boolean TRUE if the directory is writeable
 	 *
-	 * @throws StMarksSmarty_Exception MISSING_FILES After creating the directory
+	 * @throws BootstrapSmarty_Exception MISSING_FILES After creating the directory
 	 *		(if the directory does not already exist)
-	 * @throws StMarksSmarty_Exception UNREADABLE_DIRECTORY If the directory
+	 * @throws BootstrapSmarty_Exception UNREADABLE_DIRECTORY If the directory
 	 *		exists, but is not readable
 	 **/
 	private static function testReadableDirectory($directory) {
@@ -146,26 +149,26 @@ final class StMarksSmarty extends Smarty {
 			/* TODO is this reasonable behavior, or should it simply treat the directory
 			   as unreadable? */
 			$success = mkdir($directory);
-			throw new StMarksSmarty_Exception(
+			throw new BootstrapSmarty_Exception(
 				"The directory '{$directory}' was created (should have already existed and been populated)",
-				StMarksSmarty_Exception::MISSING_FILES
+				BootstrapSmarty_Exception::MISSING_FILES
 			);
 		}
 		
 		if (!$success) {
-			throw new StMarksSmarty_Exception(
+			throw new BootstrapSmarty_Exception(
 				"The directory '{$directory}' is not readable",
-				StMarksSmarty_Exception::UNREADABLE_DIRECTORY
+				BootstrapSmarty_Exception::UNREADABLE_DIRECTORY
 			);
 		}
 	}
 	
 	/**
-	 * Build an array of directories appending the StMarksSmarty defaults
+	 * Build an array of directories appending the BootstrapSmarty defaults
 	 *
 	 * @param string|string[] $appDir Application directory (or directories,
 	 *		optionally with associative array keys for identification)
-	 * @param string|string{} $uiDir StMarksSmarty directory defaults
+	 * @param string|string{} $uiDir BootstrapSmarty directory defaults
 	 * @param boolean $arrayResult (Optional) Whether or not the result should be
 	 *		a string or an array of strings (defaults to true, an array of strings)
 	 **/
@@ -194,10 +197,8 @@ final class StMarksSmarty extends Smarty {
 	}
 	
 	/**
-	 * Return the singleton instance of StMarksSmarty
+	 * Return the singleton instance of BootstrapSmarty
 	 *
-	 * @param boolean $isFramed Whether the app is displayed within an IFRAME or
-	 *		not (defaults to FALSE)
 	 * @param string|string[] $template (Optional) Additional Smarty template
 	 *		directories
 	 * @param string|string[] $config (Optional) Additional Smarty config
@@ -206,24 +207,22 @@ final class StMarksSmarty extends Smarty {
 	 *		directory
 	 * @param string $cache (Optional) Alternative Smarty cache directory
 	 *
-	 * @return StMarksSmarty
+	 * @return BootstrapSmarty
 	 *
 	 * @see http://www.phptherightway.com/pages/Design-Patterns.html#singleton Singleton Design Pattern
 	 **/
-	public static function getSmarty($isFramed = false, $template = null, $config = null, $compile = null, $cache = null) {
+	public static function getSmarty($template = null, $config = null, $compile = null, $cache = null) {
 		if (self::$singleton === null) {
-			self::$singleton = new self($isFramed, $template, $config, $compile, $cache);
+			self::$singleton = new self($template, $config, $compile, $cache);
 		}
 		return self::$singleton;
 	}
 	
 	/**
-	 * Construct the singleton instance of StMarksSmarty
+	 * Construct the singleton instance of BootstrapSmarty
 	 *
-	 * @deprecated Use singleton pattern StMarksSmarty::getSmarty()
+	 * @deprecated Use singleton pattern BootstrapSmarty::getSmarty()
 	 *
-	 * @param boolean $isFramed Whether the app is displayed within an IFRAME or
-	 *		not (defaults to FALSE)
 	 * @param string|string[] $template (Optional) Additional Smarty template
 	 *		directories
 	 * @param string|string[] $config (Optional) Additional Smarty config
@@ -234,16 +233,16 @@ final class StMarksSmarty extends Smarty {
 	 *
 	 * @return void
 	 *
-	 * @throws StMarksSmarty_Exception SINGLETON If an instance of StMarksSmarty already exists
+	 * @throws BootstrapSmarty_Exception SINGLETON If an instance of BootstrapSmarty already exists
 	 *
-	 * @see StMarksSmarty::getSmarty() StMarksSmarty::getSmarty()
+	 * @see BootstrapSmarty::getSmarty() BootstrapSmarty::getSmarty()
 	 * @see http://www.phptherightway.com/pages/Design-Patterns.html#singleton Singleton Design Pattern
 	 **/
-	public function __construct($isFramed = false, $template = null, $config = null, $compile = null, $cache = null) {
+	public function __construct($template = null, $config = null, $compile = null, $cache = null) {
 		if (self::$singleton !== null) {
-			throw new StMarksSmarty_Exception(
-				'StMarksSmarty is a singleton class, use the factory method StMarksSmarty::getSmarty() instead of ' . __METHOD__,
-				StMarksSmarty_Exception::SINGLETON
+			throw new BootstrapSmarty_Exception(
+				'BootstrapSmarty is a singleton class, use the factory method BootstrapSmarty::getSmarty() instead of ' . __METHOD__,
+				BootstrapSmarty_Exception::SINGLETON
 			);
 		} else {
 			parent::__construct();
@@ -272,74 +271,62 @@ final class StMarksSmarty extends Smarty {
 		self::testWriteableDirectory($this->getCompileDir());
 		self::testWriteableDirectory($this->getCacheDir());
 		
-		/* Define some preliminary $metadata array values (assuming use of
-		   [battis/appmetadata](https://github.com/battis/appmetadata)) used by
-		   templates */
-		$this->minimalMetadata['APP_URL'] =
-			(
-				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
-					'http://' :
-					'https://'
-			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)$|", '$1', str_replace('/vendor/smtech/stmarkssmarty', '', __DIR__));
-		$this->minimalMetadata['APP_NAME'] = 'St. Mark&rsquo;s School';
-		
 		/* Define base stylesheet */
-		$this->isFramed = $isFramed;
-		if ($this->isIframed) {
-			$this->stylesheets[self::UI_KEY] = $this->minimalMetadata['APP_URL'] . '/vendor/smtech/stmarkssmarty/stylesheets/iframed.css';
-		} else {
-			$this->stylesheets[self::UI_KEY] = $this->minimalMetadata['APP_URL'] . '/vendor/smtech/stmarkssmarty/stylesheets/stand-alone.css';
-		}
+		$this->stylesheets[self::UI_KEY] = $this->minimalMetadata['APP_URL'] . '/vendor/smtech/BootstrapSmarty/css/BootstrapSmarty.css';
+		
+		/* set some reasonable defaults */
+		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
+		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
+		$this->assign('navbarActive', false);
 	}
 	
 	/**
 	 * Change any necessary properties after a shallow copy cloning
 	 *
-	 * @deprecated Use singleton pattern StMarksSmarty::getSmarty()
+	 * @deprecated Use singleton pattern BootstrapSmarty::getSmarty()
 	 *
-	 * @throws StMarksSmarty_Exception SINGLETON If method is invoked.
+	 * @throws BootstrapSmarty_Exception SINGLETON If method is invoked.
 	 *
-	 * @see StMarksSmarty::getSmarty() StMarksSmarty::getSmarty()
+	 * @see BootstrapSmarty::getSmarty() BootstrapSmarty::getSmarty()
 	 * @see http://php.net/manual/en/language.oop5.cloning.php#object.clone Object Cloning
 	 * @see http://www.phptherightway.com/pages/Design-Patterns.html#singleton Singleton Design Pattern
 	 **/
 	private function __clone() {
-		throw new StMarksSmarty_Exception(
-			'StMarksSmarty is a singleton class, use the factory method StMarksSmarty::getSmarty() instead of ' . __METHOD__,
-			StMarksSmarty_Exception::SINGLETON
+		throw new BootstrapSmarty_Exception(
+			'BootstrapSmarty is a singleton class, use the factory method BootstrapSmarty::getSmarty() instead of ' . __METHOD__,
+			BootstrapSmarty_Exception::SINGLETON
 		);
 	}
 	
 	/**
 	 * Reconstruct any resources used by an object upon unserialize()
 	 *
-	 * @deprecated Use singleton pattern StMarksSmarty::getSmarty()
+	 * @deprecated Use singleton pattern BootstrapSmarty::getSmarty()
 	 *
-	 * @throws StMarksSmarty_Exception SINGLETON If method is invoked.
+	 * @throws BootstrapSmarty_Exception SINGLETON If method is invoked.
 	 *
-	 * @see StMarksSmarty::getSmarty() StMarksSmarty::getSmarty()
+	 * @see BootstrapSmarty::getSmarty() BootstrapSmarty::getSmarty()
 	 * @see http://php.net/manual/en/oop4.magic-functions.php The magic functions *__sleep* and *__wakeup*
 	 * @see http://www.phptherightway.com/pages/Design-Patterns.html#singleton Singleton Design Pattern
 	 **/
 	private function __wakeup() {
-		throw new StMarksSmarty_Exception(
-			'StMarksSmarty is a singleton class, use the factory method StMarksSmarty::getSmarty() instead of ' . __METHOD__,
-			StMarksSmarty_Exception::SINGLETON
+		throw new BootstrapSmarty_Exception(
+			'BootstrapSmarty is a singleton class, use the factory method BootstrapSmarty::getSmarty() instead of ' . __METHOD__,
+			BootstrapSmarty_Exception::SINGLETON
 		);
 	}
 	
 	/**
 	 * Set the directories where templates are stored
 	 *
-	 * Preserves default StMarksSmarty template directory to allow for extensions
+	 * Preserves default BootstrapSmarty template directory to allow for extensions
 	 * and applications of the base templates by application templates.
 	 *
 	 * @param string|string[] $template Additional Smarty template directories
 	 * @param boolean $isConfig (Optional) Defaults to FALSE, set to TRUE when
 	 *		Smarty::setTemplateDir() is aliased by Smarty::setConfigDir()
 	 *
-	 * @used-by StMarksSmarty::setConfigDir()
+	 * @used-by BootstrapSmarty::setConfigDir()
 	 *
 	 * @see http://www.smarty.net/docs/en/api.set.template.dir.tpl Smarty::setTemplateDir()
 	 **/
@@ -354,12 +341,12 @@ final class StMarksSmarty extends Smarty {
 	/**
 	 * Set the directories where configs are stored
 	 *
-	 * Preserves default StMarksSmarty config directory to allow for extensions
+	 * Preserves default BootstrapSmarty config directory to allow for extensions
 	 * and applications of the base configs by application configs.
 	 *
 	 * @param string|string[] $config Additional Smarty config directories
 	 *
-	 * @uses StMarksSmarty::setTemplateDir() to effect directory-mapping
+	 * @uses BootstrapSmarty::setTemplateDir() to effect directory-mapping
 	 *
 	 * @see http://www.smarty.net/docs/en/api.set.config.dir.tpl Smarty::setConfigDir()
 	 **/
@@ -370,7 +357,7 @@ final class StMarksSmarty extends Smarty {
 	/**
 	 * Set the directory where compiled templates are stored
 	 *
-	 * Allows $compile to be empty (in which case StMarkSmarty::$uiCompileDir 
+	 * Allows $compile to be empty (in which case BootstrapSmarty::$uiCompileDir 
 	 * default is substituted for the empty value)
 	 *
 	 * @param string $compile Alternative Smarty compiled template directory
@@ -384,7 +371,7 @@ final class StMarksSmarty extends Smarty {
 	/**
 	 * Set the directory where cache files are stored
 	 *
-	 * Allows $cache to be empty (in which case StMarksSmarty::$uiCacheDir is
+	 * Allows $cache to be empty (in which case BootstrapSmarty::$uiCacheDir is
 	 * substituted for the empty value)
 	 *
 	 * @param string $cache Alternative Smarty cache file directory
@@ -393,6 +380,32 @@ final class StMarksSmarty extends Smarty {
 	 **/
 	public function setCacheDir($cache) {
 		return parent::setCacheDir(self::appendUiDefaults($cache, $this->uiCacheDir, false));
+	}
+	
+	public function addTemplateDir($template, $key = null, $isConfig = false) {
+		if ($isConfig) {
+			return parent::addTemplateDir($template, $key, $isConfig);
+		} else {
+			if (!empty($key) && !empty($this->getTemplateDir($key))) {
+				return parent::addTemplateDir($template, $key);
+			} else {
+				if (!empty($key)) {
+					$template = array($key => $template);
+				}
+				return parent::setTemplateDir(self::appendUiDefaults($template, $this->getTemplateDir()));
+			}
+		}
+	}
+
+	public function addConfigDir($config, $key = null) {
+		if (!empty($key) && !empty($this->getConfigDir($key))) {
+			return parent::addConfigDir($template, $key);
+		} else {
+			if (!empty($key)) {
+				$config = array($key => $config);
+			}
+			return parent::setConfigDir($self::appendUiDefaults($config, $this->getConfigDir()));
+		}
 	}
 	
 	/**
@@ -407,7 +420,7 @@ final class StMarksSmarty extends Smarty {
 	 *		own defined associative array keys). If $key already exists in the list of
 	 *		stylesheets, that stylesheet is replaced by $stylesheet
 	 *
-	 * @throws StMarksSmarty_Exception NOT_A_URL If $stylesheet is not a URL or an
+	 * @throws BootstrapSmarty_Exception NOT_A_URL If $stylesheet is not a URL or an
 	 *		array of URLs
 	 **/
 	public function addStylesheet($stylesheet, $key = null) {
@@ -438,43 +451,23 @@ final class StMarksSmarty extends Smarty {
 					$_stylesheet["{$_key}-{$counter}"] = $s;
 					$counter++;
 				} else {
-					throw new StMarksSmarty_Exception(
+					throw new BootstrapSmarty_Exception(
 						"'{$s}' is not a URL to a CSS stylesheet",
-						StMarksSmarty_Exception::NOT_A_URL
+						BootstrapSmarty_Exception::NOT_A_URL
 					);
 				}
 			}
 		} elseif (is_string($stylesheet)) { /* single stylesheet url */
 			$_stylesheet[$_key] = $stylesheet;
 		} else {
-			throw new StMarksSmarty_Exception(
+			throw new BootstrapSmarty_Exception(
 				"'$stylesheet' is not a URL to a CSS stylesheet",
-				StMarksSmarty_Exception::NOT_A_URL
+				BootstrapSmarty_Exception::NOT_A_URL
 			);
 		}
 		
 		/* append or replace (if $key is not empty) stylesheets */
 		$this->stylesheets = array_replace($this->stylesheets, $_stylesheet);
-	}
-	
-	/**
-	 * Set whether app is displayed within an IFRAME or not
-	 *
-	 * @param boolean $isFramed
-	 *
-	 * @return void
-	 **/
-	public function setFramed($isFramed) {
-		$this->isFramed = ($isFramed == true);
-	}
-	
-	/**
-	 * Is this app displayed within an IFRAME?
-	 *
-	 * @return boolean
-	 **/
-	public function isFramed() {
-		return $this->isFramed();
 	}
 	
 	/**
@@ -495,10 +488,8 @@ final class StMarksSmarty extends Smarty {
 			return $this->stylesheets;
 		} else {
 			$result = array();
-			foreach($this-stylesheets as $name => $value) {
-				if ($name == $key) {
-					$result[$key] = $value;
-				} elseif (preg_match("/$key-\d+/", $name)) {
+			foreach($this->stylesheets as $name => $value) {
+				if (preg_match("/$key-?\d*/", $name)) {
 					$result[$name] = $value;
 				}
 			}
@@ -514,16 +505,36 @@ final class StMarksSmarty extends Smarty {
 	 * @param string $class (Optional) CSS class name of the message ("message is
 	 *		default value, "error" and "good" are also styled by default)
 	 **/
-	public function addMessage($title, $content, $class = 'message') {
+	public function addMessage($title, $content, $class = NotificationMessage::INFO) {
 		$this->messages[] = new NotificationMessage($title, $content, $class);
+	}
+	
+	/**
+	 * Add datepicker functionality
+	 * 
+	 * @param string $moduleName
+	 *
+	 * @return boolean `TRUE` on success, `FALSE` on failure
+	 *
+	 * @see https://github.com/eternicode/bootstrap-datepicker eternicode/bootstrap-datepicker
+	 **/
+	public function enable($moduleName) {
+		switch ($moduleName) {
+			case self::MODULE_DATEPICKER:
+				$this->addStylesheet(dirname($this->getStylesheet(self::UI_KEY)[self::UI_KEY]) . '/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
+				// TODO probably should really have a JavaScript list like the Stylesheet list...
+				return true;
+			
+			default:
+				return false;
+		}
 	}
 
 	/**
 	 * Displays the template
 	 *
 	 * Overrides Smarty::display() to provide some built-in template variables,
-	 * including stylesheets, messages and
-	 * [battis/appmetadata](https://github.com/battis/appmetadata), if present.
+	 * including stylesheets and messages.
 	 *
 	 * @param string $template (Optional) Name of template file (defaults to
 	 *		'page.tpl')
@@ -534,12 +545,6 @@ final class StMarksSmarty extends Smarty {
 	 * @see http://www.smarty.net/docs/en/api.display.tpl Smarty::display()
 	 **/
 	public function display($template = 'page.tpl', $cache_id = null, $compile_id = null, $parent = null) {
-		global $metadata;
-		if (!empty($metadata)) {
-			$this->assign('metadata', $metadata);
-		} else {
-			$this->assign('metadata', $this->minimalMetadata);
-		}
 		$this->assign('uiMessages', $this->messages);
 		$this->assign('uiStylesheets', $this->stylesheets);
 		parent::display($template, $cache_id, $compile_id, $parent);
@@ -547,11 +552,11 @@ final class StMarksSmarty extends Smarty {
 }
 
 /**
- * All exceptions thrown by StMarkSmarty
+ * All exceptions thrown by BootstrapSmarty
  *
- * @author Seth Battis <SethBattis@stmarksschool.org>
+ * @author Seth Battis <seth@battis.net>
  **/
-class StMarksSmarty_Exception extends Exception {
+class BootstrapSmarty_Exception extends Exception {
 	/** Violation of singleton design pattern */
 	const SINGLETON = 1;
 	

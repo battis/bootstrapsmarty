@@ -1,4 +1,5 @@
 {block name="navigation-menu"}
+<!-- for example...
 <ul class="nav navbar-nav">
 	<li><a href="#">Home</a></li>
 	<li class="dropdown">
@@ -12,4 +13,5 @@
 		</ul>
 	</li>
 </ul>
+-->
 {/block}

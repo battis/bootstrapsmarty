@@ -2,20 +2,11 @@
 
 require_once(__DIR__ . '/../../../autoload.php');
 
-use smtech\StMarksColors as sm;
-
 header("Content-Type: text/css");
 header("X-Content-Type-Options: nosniff"); /* trying to settle IE's hash */
 
-$isFramed = (empty($_REQUEST['isFramed']) ? false : $_REQUEST['isFramed'] == 'true');
-
-if ($isFramed) {
-	$headerHeight = '50px';
-} else {
-	$headerHeight = '70px';
-}
+$headerHeight = '50px';
 $footerHeight = '40px';
-
 
 ?>
 
@@ -31,28 +22,13 @@ body {
 
 .navbar-fixed-top {
 	height: <?= $headerHeight ?>;
-	<?php if (!$isFramed): ?>background: url('../images/stand-alone/header.jpg') repeat-x left center;<?php endif; ?>
 }
-
-<?php if (!$isFramed): ?>
-.navbar-brand {
-	background: url('../images/stand-alone/logo.png') no-repeat;
-	background-position: 0px 0px;
-	height: <?= $headerHeight ?>;
-	width: 250px;
-}
-
-#navigation-menu .nav {
-	margin-top: 20px;
-}
-<?php endif; ?>
 
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: <?= $footerHeight ?>;
-  background-color: <?= sm::get(sm::ALTERNATE_BACKGROUND) ?>;
 }
 
 .footer .text-muted {
@@ -66,16 +42,6 @@ body {
 
 .readable-width {
 	max-width: 680px;
-}
-
-.container-left-aligned {
-	margin-left: 0;
-	margin-right: auto;
-}
-
-.bookmarklet {
-	font-size: larger;
-	text-shadow: 1px 1px 1px white;
 }
 
 /* https://jsfiddle.net/AndrewDryga/zcX4h/1/ ********************************/

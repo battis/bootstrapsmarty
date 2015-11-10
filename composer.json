@@ -1,24 +1,23 @@
 {
-    "name": "smtech/stmarkssmarty",
-    "description": "A standard Smarty install for St. Mark's projects",
+    "name": "battis/bootstrapsmarty",
+    "description": "A wrapper for Smarty to set (and maintain) defaults within a Bootstrap UI environment",
     "license": "LGPL-3.0",
-    "require": {
-        "smarty/smarty": "3.1.*",
-        "smtech/stmarks-colors": "dev-master",
-        "battis/data-utilities": "dev-master"
-    },
-    "suggest": {
-	    "eternicode/bootstrap-datepicker": "The full Bootstrap Datepicker package for local install",
-	    "battis/appmetadata": "MySQL-backed globals array for app metadata storage"
-	    
-    },
     "authors": [
         {
             "name": "Seth Battis",
-            "email": "sethbattis@stmarksschool.org"
+            "email": "seth@battis.net"
         }
     ],
+    "require": {
+        "smarty/smarty": "3.1.*",
+        "battis/data-utilities": "dev-master"
+    },
+    "suggest": {
+	    "eternicode/bootstrap-datepicker": "The full Bootstrap Datepicker package for local install",	    
+    },
     "autoload": {
-	    "classmap": [""]
+	    "psr-4": {
+	    	"Battis\\BootstrapSmarty\\": ""
+	    }
     }
 }

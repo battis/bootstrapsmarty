@@ -1,10 +1,12 @@
 <?php
 /** NotificationMessage and related classes */
 
+namespace Battis\BootstrapSmarty;
+
 /**
  * A notification message for the user
  *
- * @author Seth Battis <SethBattis@stmarksschool.org>
+ * @author Seth Battis <seth@battis.net>
  **/
 class NotificationMessage {
 
