@@ -13,7 +13,7 @@
         "battis/data-utilities": "dev-master"
     },
     "suggest": {
-	    "eternicode/bootstrap-datepicker": "The full Bootstrap Datepicker package for local install",	    
+	    "eternicode/bootstrap-datepicker": "The full Bootstrap Datepicker package for local install"    
     },
     "autoload": {
 	    "psr-4": {

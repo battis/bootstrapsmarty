@@ -4,8 +4,42 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8d773f919737f5de659ab628092fe99",
+    "hash": "5ec3a421206de25d2dba04683e0b498d",
+    "content-hash": "f3e4f586fdd2477b989f92a4d02435f9",
     "packages": [
+        {
+            "name": "battis/data-utilities",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/battis/data-utilities.git",
+                "reference": "2675320d7b9099c0689a6db9e2262ea70d40742f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/battis/data-utilities/zipball/2675320d7b9099c0689a6db9e2262ea70d40742f",
+                "reference": "2675320d7b9099c0689a6db9e2262ea70d40742f",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Battis\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Seth Battis",
+                    "email": "sethbattis@stmarksschool.org"
+                }
+            ],
+            "description": "A handful of useful helper functions to process data",
+            "time": "2015-10-11 14:54:59"
+        },
         {
             "name": "smarty/smarty",
             "version": "v3.1.27",
@@ -65,7 +99,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "battis/data-utilities": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
