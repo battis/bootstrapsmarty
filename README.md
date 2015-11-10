@@ -6,9 +6,9 @@ A wrapper for Smarty to set (and maintain) defaults within a Bootstrap UI enviro
 
 Include in `composer.json`:
 
-```
+```JSON
 "require": {
-  "battis/BootstrapSmarty": "~1.0"
+  "battis/bootstrapsmarty": "~1.0"
 }
 ```
 
@@ -16,7 +16,7 @@ Include in `composer.json`:
 
 If you have no templates of your own:
 
-```
+```PHP
 $smarty = Battis\BootstrapSmarty\BootstrapSmarty::getSmarty();
 
 // ...app logic...
@@ -27,8 +27,16 @@ $smarty->display();
 
 If you have your own templates directory:
 
-```
-$smarty->addTemplateDir('<path-to-your-templates-dir>');
+```PHP
+$smarty->addTemplateDir('path/to/your/templates_dir');
 ```
 
-Complete [API documentation](http://htmlpreview.github.io/?https://github.com/battis/BootstrapSmarty/blob/master/doc/index.html) is included in the repo and the [Smarty API documentation](http://www.smarty.net/docs/en/) is also online.
+If you have your own stylesheet:
+
+```PHP
+$smarty->addStylesheet('path/to/your/stylesheet.css');
+```
+
+
+
+Complete [API documentation](https://htmlpreview.github.io/?https://raw.githubusercontent.com/battis/BootstrapSmarty/master/doc/namespaces/Battis.BootstrapSmarty.html) is included in the repo and the [Smarty API documentation](http://www.smarty.net/docs/en/) is also online.
