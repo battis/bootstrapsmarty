@@ -63,17 +63,16 @@ class NotificationMessage {
 	 * @return string All links in `$html` will be updated to include the `alert-link` selector class
 	 **/
 	private static function styleAlertLinks($html) {
-		$xml = simplexml_load_string("<div>$html</div>");
-		$anchors = $xml->xpath('//a');
-		for($i = 0; $i < count($anchors); $i++) {
-			if (isset($anchors[$i]->attributes()->class)) {
-				/* this is dumb, but it appears that the concatenate-assignment operator (`.=`) doesn't work here */
-				$anchors[$i]->attributes()->class = $anchors[$i]->attributes()->class . ' alert-link';
-			} else {
-				$anchors[$i]->addAttribute('class', 'alert-link');
+		$dom = new DOMDocument;
+		$dom->loadHTML($html);
+		foreach($dom->getElementsByTagName('a') as $a) {
+			$class = 'alert-link';
+			if($a->hasAttribute('class')) {
+				$class .= ' ' . $a->getAttribute('class');
 			}
+			$a->setAttribute('class', $class);
 		}
-		return $xml->asXml();
+		return $dom->saveHTML();
 	}
 	
 	/**
