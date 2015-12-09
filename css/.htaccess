@@ -1,5 +1,5 @@
-# force processing of StMarksSmarty.css as PHP
-<Files StMarksSmarty.css>
+# force processing of BootstrapSmarty.css as PHP
+<Files BootstrapSmarty.css>
 	ForceType application/x-httpd-php
 	SetHandler application/x-httpd-php
 </Files>

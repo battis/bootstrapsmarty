@@ -12,7 +12,7 @@ use Battis\DataUtilities;
  *
  * @author Seth Battis <seth@battis.net>
  **/
-final class BootstrapSmarty extends Smarty {
+final class BootstrapSmarty extends \Smarty {
 
 	/**
 	 * @var BootstrapSmarty|NULL Reference to the singleton BootstrapSmarty
@@ -70,14 +70,7 @@ final class BootstrapSmarty extends Smarty {
 	
 	/** @var string[] $stylesheets List of stylesheets to be applied */
 	private $stylesheets = array();
-	
-	/**
-	 * @var array Application metadata backup (in case
-	 *		[battis/appmetadata](https://github.com/battis/appmetadata) is not being
-	 *		used
-	 **/
-	private $minimalMetadata = array();
-	
+		
 	/**
 	 * Test a file systems directory for writeability by the Apache user
 	 *
@@ -272,9 +265,20 @@ final class BootstrapSmarty extends Smarty {
 		self::testWriteableDirectory($this->getCacheDir());
 		
 		/* Define base stylesheet */
-		$this->stylesheets[self::UI_KEY] = $this->minimalMetadata['APP_URL'] . '/vendor/smtech/BootstrapSmarty/css/BootstrapSmarty.css';
+		$this->stylesheets[self::UI_KEY] = (
+				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
+					'http://' :
+					'https://'
+			) .
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)$|", '$1', __DIR__) . '/css/BootstrapSmarty.css';
 		
 		/* set some reasonable defaults */
+		$this->assign('BOOTSTRAPSMARTY_URL', (
+				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
+					'http://' :
+					'https://'
+			) .
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)$|", '$1', __DIR__));
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
 		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
 		$this->assign('navbarActive', false);
@@ -556,7 +560,7 @@ final class BootstrapSmarty extends Smarty {
  *
  * @author Seth Battis <seth@battis.net>
  **/
-class BootstrapSmarty_Exception extends Exception {
+class BootstrapSmarty_Exception extends \Exception {
 	/** Violation of singleton design pattern */
 	const SINGLETON = 1;
 	

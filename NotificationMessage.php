@@ -63,7 +63,7 @@ class NotificationMessage {
 	 * @return string All links in `$html` will be updated to include the `alert-link` selector class
 	 **/
 	private static function styleAlertLinks($html) {
-		$dom = new DOMDocument;
+		$dom = new \DOMDocument;
 		$dom->loadHTML($html);
 		foreach($dom->getElementsByTagName('a') as $a) {
 			$class = 'alert-link';

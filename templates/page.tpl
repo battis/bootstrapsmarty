@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		{block name="post-bootstrap-meta"}{/block}
 	
-		<title>{title:default 'Untitled'}</title>
+		<title>{$title|default: 'Untitled'}</title>
 		
 		{block name="pre-bootstrap-stylesheets"}{/block}
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
@@ -44,10 +44,10 @@
 		{block name="pre-bootstrap-scripts"}{/block}
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<script src="{$metadata['APP_URL']}/vendor/smtech/BootstrapSmarty/js/ie10-viewport-bug-workaround.js"></script>
-		<script src="{$metadata['APP_URL']}/vendor/smtech/BootstrapSmarty/js/button-spinner.js"></script>
+		<script src="{$BOOTSTRAPSMARTY_URL}/js/ie10-viewport-bug-workaround.js"></script>
+		<script src="{$BOOTSTRAPSMARTY_URL}/js/button-spinner.js"></script>
 		{if !empty($uiStylesheets['eternicode/bootstrap-datepicker'])}
-			<script src="{$metadata['APP_URL']}/vendor/smtech/BootstrapSmarty/js/bootstrap-datepicker.min.js"></script>
+			<script src="{$BOOTSTRAPSMARTY_URL}/js/bootstrap-datepicker.min.js"></script>
 			<script>
 				$('.input-group.date').datepicker({
 					orientation: 'top auto',
