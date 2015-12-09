@@ -1,0 +1,246 @@
+<!-- http://codepen.io/codecalm/pen/eppjjM and more at http://codepen.io/collection/HtAne/ -->
+<style>
+body {
+  background: #ffffff;
+}
+
+.dots {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  outline: 1px solid red;
+  -webkit-filter: url(#goo);
+          filter: url(#goo);
+}
+
+.dot {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.dot:before {
+  content: '';
+  width: 35px;
+  height: 35px;
+  border-radius: 50px;
+  background: #FBD301;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  margin-left: -17.5px;
+  margin-top: -17.5px;
+}
+@-webkit-keyframes dot-move {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  18%, 22% {
+    -webkit-transform: translateY(-70px);
+            transform: translateY(-70px);
+  }
+  40%, 100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes dot-move {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  18%, 22% {
+    -webkit-transform: translateY(-70px);
+            transform: translateY(-70px);
+  }
+  40%, 100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@-webkit-keyframes dot-colors {
+  0% {
+    background-color: #FBD301;
+  }
+  25% {
+    background-color: #FF3270;
+  }
+  50% {
+    background-color: #208BF1;
+  }
+  75% {
+    background-color: #AFE102;
+  }
+  100% {
+    background-color: #FBD301;
+  }
+}
+@keyframes dot-colors {
+  0% {
+    background-color: #FBD301;
+  }
+  25% {
+    background-color: #FF3270;
+  }
+  50% {
+    background-color: #208BF1;
+  }
+  75% {
+    background-color: #AFE102;
+  }
+  100% {
+    background-color: #FBD301;
+  }
+}
+.dot:nth-child(5):before {
+  z-index: 100;
+  width: 45.5px;
+  height: 45.5px;
+  margin-left: -22.75px;
+  margin-top: -22.75px;
+  -webkit-animation: dot-colors 4s ease infinite;
+          animation: dot-colors 4s ease infinite;
+}
+@-webkit-keyframes dot-rotate-1 {
+  0% {
+    -webkit-transform: rotate(-105deg);
+            transform: rotate(-105deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+@keyframes dot-rotate-1 {
+  0% {
+    -webkit-transform: rotate(-105deg);
+            transform: rotate(-105deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+.dot:nth-child(1) {
+  -webkit-animation: dot-rotate-1 4s 0s linear infinite;
+          animation: dot-rotate-1 4s 0s linear infinite;
+}
+.dot:nth-child(1):before {
+  background-color: #FF3270;
+  -webkit-animation: dot-move 4s 0s ease infinite;
+          animation: dot-move 4s 0s ease infinite;
+}
+@-webkit-keyframes dot-rotate-2 {
+  0% {
+    -webkit-transform: rotate(165deg);
+            transform: rotate(165deg);
+  }
+  100% {
+    -webkit-transform: rotate(540deg);
+            transform: rotate(540deg);
+  }
+}
+@keyframes dot-rotate-2 {
+  0% {
+    -webkit-transform: rotate(165deg);
+            transform: rotate(165deg);
+  }
+  100% {
+    -webkit-transform: rotate(540deg);
+            transform: rotate(540deg);
+  }
+}
+.dot:nth-child(2) {
+  -webkit-animation: dot-rotate-2 4s 1s linear infinite;
+          animation: dot-rotate-2 4s 1s linear infinite;
+}
+.dot:nth-child(2):before {
+  background-color: #208BF1;
+  -webkit-animation: dot-move 4s 1s ease infinite;
+          animation: dot-move 4s 1s ease infinite;
+}
+@-webkit-keyframes dot-rotate-3 {
+  0% {
+    -webkit-transform: rotate(435deg);
+            transform: rotate(435deg);
+  }
+  100% {
+    -webkit-transform: rotate(810deg);
+            transform: rotate(810deg);
+  }
+}
+@keyframes dot-rotate-3 {
+  0% {
+    -webkit-transform: rotate(435deg);
+            transform: rotate(435deg);
+  }
+  100% {
+    -webkit-transform: rotate(810deg);
+            transform: rotate(810deg);
+  }
+}
+.dot:nth-child(3) {
+  -webkit-animation: dot-rotate-3 4s 2s linear infinite;
+          animation: dot-rotate-3 4s 2s linear infinite;
+}
+.dot:nth-child(3):before {
+  background-color: #AFE102;
+  -webkit-animation: dot-move 4s 2s ease infinite;
+          animation: dot-move 4s 2s ease infinite;
+}
+@-webkit-keyframes dot-rotate-4 {
+  0% {
+    -webkit-transform: rotate(705deg);
+            transform: rotate(705deg);
+  }
+  100% {
+    -webkit-transform: rotate(1080deg);
+            transform: rotate(1080deg);
+  }
+}
+@keyframes dot-rotate-4 {
+  0% {
+    -webkit-transform: rotate(705deg);
+            transform: rotate(705deg);
+  }
+  100% {
+    -webkit-transform: rotate(1080deg);
+            transform: rotate(1080deg);
+  }
+}
+.dot:nth-child(4) {
+  -webkit-animation: dot-rotate-4 4s 3s linear infinite;
+          animation: dot-rotate-4 4s 3s linear infinite;
+}
+.dot:nth-child(4):before {
+  background-color: #FBD301;
+  -webkit-animation: dot-move 4s 3s ease infinite;
+          animation: dot-move 4s 3s ease infinite;
+}
+</style>
+
+<div class="dots">
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<filter id="goo">
+			<feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="12" />
+			<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+			<!--<feBlend in2="goo" in="SourceGraphic" result="mix" />-->
+		</filter>
+	</defs>
+</svg>
