@@ -12,13 +12,13 @@ use Battis\DataUtilities;
  *
  * @author Seth Battis <seth@battis.net>
  **/
-final class BootstrapSmarty extends Smarty {
+class BootstrapSmarty extends \Smarty {
 
 	/**
 	 * @var BootstrapSmarty|NULL Reference to the singleton BootstrapSmarty
 	 *		instance
 	 **/
-	private static $singleton = null;
+	protected static $singleton = null;
 
 
 	/**
@@ -70,14 +70,7 @@ final class BootstrapSmarty extends Smarty {
 	
 	/** @var string[] $stylesheets List of stylesheets to be applied */
 	private $stylesheets = array();
-	
-	/**
-	 * @var array Application metadata backup (in case
-	 *		[battis/appmetadata](https://github.com/battis/appmetadata) is not being
-	 *		used
-	 **/
-	private $minimalMetadata = array();
-	
+		
 	/**
 	 * Test a file systems directory for writeability by the Apache user
 	 *
@@ -250,10 +243,10 @@ final class BootstrapSmarty extends Smarty {
 		}
 		
 		/* Default to local directories for use by Smarty */
-		$this->uiTemplateDir = array(self::UI_KEY => __DIR__ . '/templates');
-		$this->uiConfigDir = array(self::UI_KEY => __DIR__ . '/configs');
-		$this->uiCompileDir = __DIR__ . '/templates_c';
-		$this->uiCacheDir = __DIR__ . '/cache';
+		$this->uiTemplateDir = array(self::UI_KEY => realpath(__DIR__ . '/../templates'));
+		$this->uiConfigDir = array(self::UI_KEY => realpath(__DIR__ . '/../configs'));
+		$this->uiCompileDir = realpath(__DIR__ . '/../templates_c');
+		$this->uiCacheDir = realpath(__DIR__ . '/../cache');
 		
 		/* Apply user additions and alternates */
 		$this->setTemplateDir($template);
@@ -272,9 +265,20 @@ final class BootstrapSmarty extends Smarty {
 		self::testWriteableDirectory($this->getCacheDir());
 		
 		/* Define base stylesheet */
-		$this->stylesheets[self::UI_KEY] = $this->minimalMetadata['APP_URL'] . '/vendor/smtech/BootstrapSmarty/css/BootstrapSmarty.css';
+		$this->stylesheets[self::UI_KEY] = (
+				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
+					'http://' :
+					'https://'
+			) .
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__) . '/css/BootstrapSmarty.css';
 		
 		/* set some reasonable defaults */
+		$this->assign('BOOTSTRAPSMARTY_URL', (
+				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
+					'http://' :
+					'https://'
+			) .
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__));
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
 		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
 		$this->assign('navbarActive', false);
@@ -382,6 +386,25 @@ final class BootstrapSmarty extends Smarty {
 		return parent::setCacheDir(self::appendUiDefaults($cache, $this->uiCacheDir, false));
 	}
 	
+	/**
+	 * Add additional template directory
+	 *
+	 * Additional template directorites are loaded after the base template
+	 * directories, allowing templates in the additional template directories to
+	 * override base templates.
+	 *
+	 * @param string $template Local path to template directory
+	 * @param string $key (Optional) Unique identifier for template directory. If
+	 *		no key is provided, the template directory will override any previously
+	 *		added template directory without a key (i.e. "no key" is itself a key).
+	 * @param boolean $isConfig (Optional) for use by Smarty only
+	 *
+	 * @return array The template directory chain
+	 *
+	 * @uses BootstrapSmarty::setTemplateDir()
+	 *
+	 * @see http://www.smarty.net/docs/en/api.add.template.dir.tpl Smarty::addTemplateDir()
+	 **/
 	public function addTemplateDir($template, $key = null, $isConfig = false) {
 		if ($isConfig) {
 			return parent::addTemplateDir($template, $key, $isConfig);
@@ -397,6 +420,22 @@ final class BootstrapSmarty extends Smarty {
 		}
 	}
 
+	/**
+	 * Add additional config directory
+	 *
+	 * Additional config directories are loaded after the base config directory,
+	 * allowing config files in the additional directories to override base config
+	 * files.
+	 *
+	 * @param string $config Local path to config directory
+	 * @param string $key (Optional) Unique identifier for config directory. If
+	 *		no key is provided, the config directory will override any previously
+	 *		added config directory without a key (i.e. "no key" is itself a key).
+	 *
+	 * @return array The config directory chain
+	 *
+	 * @see http://www.smarty.net/docs/en/api.add.config.dir.tpl Smarty::addConfigDir()
+	 **/
 	public function addConfigDir($config, $key = null) {
 		if (!empty($key) && !empty($this->getConfigDir($key))) {
 			return parent::addConfigDir($template, $key);
@@ -409,7 +448,7 @@ final class BootstrapSmarty extends Smarty {
 	}
 	
 	/**
-	 * Add additional CSS stylesheets
+	 * Add additional CSS stylesheet
 	 *
 	 * Additional stylesheets are loaded after the base stylesheet(s)
 	 *
@@ -556,7 +595,7 @@ final class BootstrapSmarty extends Smarty {
  *
  * @author Seth Battis <seth@battis.net>
  **/
-class BootstrapSmarty_Exception extends Exception {
+class BootstrapSmarty_Exception extends \Exception {
 	/** Violation of singleton design pattern */
 	const SINGLETON = 1;
 	

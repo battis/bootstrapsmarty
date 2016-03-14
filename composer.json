@@ -19,5 +19,11 @@
 	    "psr-4": {
 	    	"Battis\\BootstrapSmarty\\": "src/"
 	    }
+    },
+    "archive": {
+	    "exclude": [
+		    "/doc/",
+		    "phpdoc.dist.xml"
+	    ]
     }
 }

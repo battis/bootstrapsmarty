@@ -386,6 +386,25 @@ class BootstrapSmarty extends \Smarty {
 		return parent::setCacheDir(self::appendUiDefaults($cache, $this->uiCacheDir, false));
 	}
 	
+	/**
+	 * Add additional template directory
+	 *
+	 * Additional template directorites are loaded after the base template
+	 * directories, allowing templates in the additional template directories to
+	 * override base templates.
+	 *
+	 * @param string $template Local path to template directory
+	 * @param string $key (Optional) Unique identifier for template directory. If
+	 *		no key is provided, the template directory will override any previously
+	 *		added template directory without a key (i.e. "no key" is itself a key).
+	 * @param boolean $isConfig (Optional) for use by Smarty only
+	 *
+	 * @return array The template directory chain
+	 *
+	 * @uses BootstrapSmarty::setTemplateDir()
+	 *
+	 * @see http://www.smarty.net/docs/en/api.add.template.dir.tpl Smarty::addTemplateDir()
+	 **/
 	public function addTemplateDir($template, $key = null, $isConfig = false) {
 		if ($isConfig) {
 			return parent::addTemplateDir($template, $key, $isConfig);
@@ -401,6 +420,22 @@ class BootstrapSmarty extends \Smarty {
 		}
 	}
 
+	/**
+	 * Add additional config directory
+	 *
+	 * Additional config directories are loaded after the base config directory,
+	 * allowing config files in the additional directories to override base config
+	 * files.
+	 *
+	 * @param string $config Local path to config directory
+	 * @param string $key (Optional) Unique identifier for config directory. If
+	 *		no key is provided, the config directory will override any previously
+	 *		added config directory without a key (i.e. "no key" is itself a key).
+	 *
+	 * @return array The config directory chain
+	 *
+	 * @see http://www.smarty.net/docs/en/api.add.config.dir.tpl Smarty::addConfigDir()
+	 **/
 	public function addConfigDir($config, $key = null) {
 		if (!empty($key) && !empty($this->getConfigDir($key))) {
 			return parent::addConfigDir($template, $key);
@@ -413,7 +448,7 @@ class BootstrapSmarty extends \Smarty {
 	}
 	
 	/**
-	 * Add additional CSS stylesheets
+	 * Add additional CSS stylesheet
 	 *
 	 * Additional stylesheets are loaded after the base stylesheet(s)
 	 *

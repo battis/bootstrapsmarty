@@ -17,7 +17,8 @@ Include in `composer.json`:
 If you have no templates of your own:
 
 ```PHP
-$smarty = Battis\BootstrapSmarty\BootstrapSmarty::getSmarty();
+use Battis\BootstrapSmarty\BootstrapSmarty;
+$smarty = BootstrapSmarty::getSmarty();
 
 // ...app logic...
 
