@@ -18,7 +18,7 @@ class BootstrapSmarty extends \Smarty {
 	 * @var BootstrapSmarty|NULL Reference to the singleton BootstrapSmarty
 	 *		instance
 	 **/
-	private static $singleton = null;
+	protected static $singleton = null;
 
 
 	/**
@@ -243,10 +243,10 @@ class BootstrapSmarty extends \Smarty {
 		}
 		
 		/* Default to local directories for use by Smarty */
-		$this->uiTemplateDir = array(self::UI_KEY => __DIR__ . '/../templates');
-		$this->uiConfigDir = array(self::UI_KEY => __DIR__ . '/../configs');
-		$this->uiCompileDir = __DIR__ . '/../templates_c';
-		$this->uiCacheDir = __DIR__ . '/../cache';
+		$this->uiTemplateDir = array(self::UI_KEY => realpath(__DIR__ . '/../templates'));
+		$this->uiConfigDir = array(self::UI_KEY => realpath(__DIR__ . '/../configs'));
+		$this->uiCompileDir = realpath(__DIR__ . '/../templates_c');
+		$this->uiCacheDir = realpath(__DIR__ . '/../cache');
 		
 		/* Apply user additions and alternates */
 		$this->setTemplateDir($template);
@@ -270,7 +270,7 @@ class BootstrapSmarty extends \Smarty {
 					'http://' :
 					'https://'
 			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)$|", '$1', __DIR__) . '/../css/BootstrapSmarty.css';
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__) . '/css/BootstrapSmarty.css';
 		
 		/* set some reasonable defaults */
 		$this->assign('BOOTSTRAPSMARTY_URL', (
@@ -278,7 +278,7 @@ class BootstrapSmarty extends \Smarty {
 					'http://' :
 					'https://'
 			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)$|", '$1', __DIR__));
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__));
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
 		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
 		$this->assign('navbarActive', false);

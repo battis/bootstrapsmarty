@@ -1,4 +1,6 @@
 /vendor/
-/templates_c/
-/cache/
+/templates_c/*
+!/templates_c/README.md
+/cache/*
+!/cache/README.md
 /phpdoc/
