@@ -12,7 +12,7 @@ use Battis\DataUtilities;
  *
  * @author Seth Battis <seth@battis.net>
  **/
-final class BootstrapSmarty extends \Smarty {
+class BootstrapSmarty extends \Smarty {
 
 	/**
 	 * @var BootstrapSmarty|NULL Reference to the singleton BootstrapSmarty
@@ -243,10 +243,10 @@ final class BootstrapSmarty extends \Smarty {
 		}
 		
 		/* Default to local directories for use by Smarty */
-		$this->uiTemplateDir = array(self::UI_KEY => __DIR__ . '/templates');
-		$this->uiConfigDir = array(self::UI_KEY => __DIR__ . '/configs');
-		$this->uiCompileDir = __DIR__ . '/templates_c';
-		$this->uiCacheDir = __DIR__ . '/cache';
+		$this->uiTemplateDir = array(self::UI_KEY => __DIR__ . '/../templates');
+		$this->uiConfigDir = array(self::UI_KEY => __DIR__ . '/../configs');
+		$this->uiCompileDir = __DIR__ . '/../templates_c';
+		$this->uiCacheDir = __DIR__ . '/../cache';
 		
 		/* Apply user additions and alternates */
 		$this->setTemplateDir($template);
@@ -270,7 +270,7 @@ final class BootstrapSmarty extends \Smarty {
 					'http://' :
 					'https://'
 			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)$|", '$1', __DIR__) . '/css/BootstrapSmarty.css';
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)$|", '$1', __DIR__) . '/../css/BootstrapSmarty.css';
 		
 		/* set some reasonable defaults */
 		$this->assign('BOOTSTRAPSMARTY_URL', (
