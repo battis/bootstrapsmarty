@@ -76,10 +76,10 @@ class BootstrapSmarty extends \Smarty {
 	/** @var string[] $scripts List of Javascript files to be loaded */
 	private $scripts = array();
 	
-	/** @var string[] $scriptLiteral List of Javascript snippets to be run after scripts are loaded */
-	private $scriptLiteral = array();
+	/** @var string[] #scriptSnippets List of Javascript snippets to be run after scripts are loaded */
+	private $scriptSnippets = array();
 	
-	/** var string $url URL of BootstrapSmarty instance */
+	/** var st$ing $url URL of BootstrapSmarty instance */
 	private $url;
 		
 	/**
@@ -565,11 +565,17 @@ class BootstrapSmarty extends \Smarty {
 		}
 	}
 	
-	public function addScriptLiteral($script, $key = null) {
+	/**
+	 * Add a snippet of Javascript to run after script files are loaded
+	 *
+	 * @param string $snippet Javascript snippet
+	 * @param string $key (Optional) Unique identifier for the snippet
+	 **/
+	public function addScriptSnippet($snippet, $key = null) {
 		if (empty($key)) {
-			$this->scriptLiteral[] = $script;
+			$this->scriptSnippets[] = $snippet;
 		} else {
-			$this->scriptLiteral[$key] = $script;
+			$this->scriptSnippets[$key] = $snippet;
 		}
 	}
 	
@@ -600,7 +606,7 @@ class BootstrapSmarty extends \Smarty {
 			case self::MODULE_DATEPICKER:
 				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
 				$this->addScript($assetUrl . '/bower-asset/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js', self::MODULE_DATEPICKER);
-				$this->addScriptLiteral("
+				$this->addScriptSnippet("
 					$('.input-group.date').datepicker({
 						orientation: 'top auto',
 					    autoclose: true,
@@ -612,7 +618,7 @@ class BootstrapSmarty extends \Smarty {
 			case self::MODULE_COLORPICKER:
 				$this->addStylesheet($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', self::MODULE_COLORPICKER);
 				$this->addScript($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js', self::MODULE_COLORPICKER);
-				$this->addScriptLiteral("
+				$this->addScriptSnippet("
 					$('.input-group.color').colorpicker();
 				", self::MODULE_COLORPICKER);
 				return true;
@@ -646,7 +652,7 @@ class BootstrapSmarty extends \Smarty {
 		$this->assign('uiMessages', $this->messages);
 		$this->assign('uiStylesheets', $this->stylesheets);
 		$this->assign('uiScripts', $this->scripts);
-		$this->assign('uiScriptLiteral', $this->scriptLiteral);
+		$this->assign('uiScriptSnippets', $this->scriptSnippets);
 		parent::display($template, $cache_id, $compile_id, $parent);
 	}
 }

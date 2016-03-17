@@ -83,7 +83,7 @@
 				<script src="{$script}"{if !empty($name)} name="{$name}"{/if}></script>
 			{/foreach}
 			<script>
-				{foreach $uiScriptLiteral as $name => $snippet}
+				{foreach $uiScriptSnippets as $name => $snippet}
 					{if !empty($name)}// {$name}{/if}
 					{$snippet}
 					

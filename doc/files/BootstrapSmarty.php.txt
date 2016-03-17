@@ -36,6 +36,8 @@ class BootstrapSmarty extends \Smarty {
 	
 	/** Module name for eternicode/bootstrap-datepicker */
 	const MODULE_DATEPICKER = 'eternicode/bootstrap-datepicker';
+	const MODULE_COLORPICKER = 'mjolnic/bootstrap-colorpicker';
+	const MODULE_SORTABLE = 'drvic10k/bootstrap-sortable';
 
 
 	/**
@@ -70,6 +72,15 @@ class BootstrapSmarty extends \Smarty {
 	
 	/** @var string[] $stylesheets List of stylesheets to be applied */
 	private $stylesheets = array();
+	
+	/** @var string[] $scripts List of Javascript files to be loaded */
+	private $scripts = array();
+	
+	/** @var string[] #scriptSnippets List of Javascript snippets to be run after scripts are loaded */
+	private $scriptSnippets = array();
+	
+	/** var st$ing $url URL of BootstrapSmarty instance */
+	private $url;
 		
 	/**
 	 * Test a file systems directory for writeability by the Apache user
@@ -273,15 +284,19 @@ class BootstrapSmarty extends \Smarty {
 			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__) . '/css/BootstrapSmarty.css';
 		
 		/* set some reasonable defaults */
-		$this->assign('BOOTSTRAPSMARTY_URL', (
+		$this->url = (
 				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
 					'http://' :
 					'https://'
 			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__));
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__);
+		$this->assign('BOOTSTRAPSMARTY_URL', $this->url);
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
 		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
 		$this->assign('navbarActive', false);
+		$this->assign('MODULE_COLORPICKER', self::MODULE_COLORPICKER);
+		$this->assign('MODULE_DATEPICKER', self::MODULE_DATEPICKER);
+		$this->assign('MODULE_SORTABLE', self::MODULE_SORTABLE);
 	}
 	
 	/**
@@ -537,6 +552,34 @@ class BootstrapSmarty extends \Smarty {
 	}
 	
 	/**
+	 * Add a script to the list to be loaded after Bootstrap and JQuery
+	 *
+	 * @param string $script URL of the script file
+	 * @param string $key (Optional) Unique identifier for the script
+	 **/
+	public function addScript($script, $key = null) {
+		if (empty($key)) {
+			$this->scripts[] = $script;
+		} else {
+			$this->scripts[$key] = $script;
+		}
+	}
+	
+	/**
+	 * Add a snippet of Javascript to run after script files are loaded
+	 *
+	 * @param string $snippet Javascript snippet
+	 * @param string $key (Optional) Unique identifier for the snippet
+	 **/
+	public function addScriptSnippet($snippet, $key = null) {
+		if (empty($key)) {
+			$this->scriptSnippets[] = $snippet;
+		} else {
+			$this->scriptSnippets[$key] = $snippet;
+		}
+	}
+	
+	/**
 	 * Add a message to be diplayed to the user
 	 *
 	 * @param string $title HTML-formatted title of the message
@@ -558,10 +601,32 @@ class BootstrapSmarty extends \Smarty {
 	 * @see https://github.com/eternicode/bootstrap-datepicker eternicode/bootstrap-datepicker
 	 **/
 	public function enable($moduleName) {
+		$assetUrl = $this->url . (preg_match('|/vendor/|', __DIR__) ? '/../..' : '/vendor');
 		switch ($moduleName) {
 			case self::MODULE_DATEPICKER:
-				$this->addStylesheet(dirname($this->getStylesheet(self::UI_KEY)[self::UI_KEY]) . '/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
-				// TODO probably should really have a JavaScript list like the Stylesheet list...
+				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
+				$this->addScript($assetUrl . '/bower-asset/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js', self::MODULE_DATEPICKER);
+				$this->addScriptSnippet("
+					$('.input-group.date').datepicker({
+						orientation: 'top auto',
+					    autoclose: true,
+					    todayHighlight: true
+					});
+				", self::MODULE_DATEPICKER);
+				return true;
+			
+			case self::MODULE_COLORPICKER:
+				$this->addStylesheet($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', self::MODULE_COLORPICKER);
+				$this->addScript($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js', self::MODULE_COLORPICKER);
+				$this->addScriptSnippet("
+					$('.input-group.color').colorpicker();
+				", self::MODULE_COLORPICKER);
+				return true;
+			
+			case self::MODULE_SORTABLE:
+				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-sortable/Contents/bootstrap-sortable.css', self::MODULE_SORTABLE);
+				$this->addScript($assetUrl . '/bower-asset/moment/min/moment.min.js', 'required by ' . self::MODULE_SORTABLE);
+				$this->addScript($assetUrl . '/bower-asset/bootstrap-sortable/Scripts/bootstrap-sortable.js', self::MODULE_SORTABLE);
 				return true;
 			
 			default:
@@ -586,6 +651,8 @@ class BootstrapSmarty extends \Smarty {
 	public function display($template = 'page.tpl', $cache_id = null, $compile_id = null, $parent = null) {
 		$this->assign('uiMessages', $this->messages);
 		$this->assign('uiStylesheets', $this->stylesheets);
+		$this->assign('uiScripts', $this->scripts);
+		$this->assign('uiScriptSnippets', $this->scriptSnippets);
 		parent::display($template, $cache_id, $compile_id, $parent);
 	}
 }
