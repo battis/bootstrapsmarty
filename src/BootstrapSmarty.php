@@ -72,6 +72,11 @@ class BootstrapSmarty extends \Smarty {
 	/** @var string[] $stylesheets List of stylesheets to be applied */
 	private $stylesheets = array();
 	
+	/** @var string[] $scripts List of Javascript files to be loaded */
+	private $scripts = array();
+	
+	/** @var string[] $scriptLiteral List of Javascript snippets to be run after scripts are loaded */
+	private $scriptLiteral = array();
 	
 	/** var string $url URL of BootstrapSmarty instance */
 	private $url;
@@ -290,6 +295,7 @@ class BootstrapSmarty extends \Smarty {
 		$this->assign('navbarActive', false);
 		$this->assign('MODULE_COLORPICKER', self::MODULE_COLORPICKER);
 		$this->assign('MODULE_DATEPICKER', self::MODULE_DATEPICKER);
+		$this->assign('MODULE_SORTABLE', self::MODULE_SORTABLE);
 	}
 	
 	/**
@@ -545,6 +551,28 @@ class BootstrapSmarty extends \Smarty {
 	}
 	
 	/**
+	 * Add a script to the list to be loaded after Bootstrap and JQuery
+	 *
+	 * @param string $script URL of the script file
+	 * @param string $key (Optional) Unique identifier for the script
+	 **/
+	public function addScript($script, $key = null) {
+		if (empty($key)) {
+			$this->scripts[] = $script;
+		} else {
+			$this->scripts[$key] = $script;
+		}
+	}
+	
+	public function addScriptLiteral($script, $key = null) {
+		if (empty($key)) {
+			$this->scriptLiteral[] = $script;
+		} else {
+			$this->scriptLiteral[$key] = $script;
+		}
+	}
+	
+	/**
 	 * Add a message to be diplayed to the user
 	 *
 	 * @param string $title HTML-formatted title of the message
@@ -570,12 +598,22 @@ class BootstrapSmarty extends \Smarty {
 		switch ($moduleName) {
 			case self::MODULE_DATEPICKER:
 				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
-				// TODO probably should really have a JavaScript list like the Stylesheet list...
+				$this->addScript($assetUrl . '/bower-asset/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js', self::MODULE_DATEPICKER);
+				$this->addScriptLiteral("
+					$('.input-group.date').datepicker({
+						orientation: 'top auto',
+					    autoclose: true,
+					    todayHighlight: true
+					});
+				", self::MODULE_DATEPICKER);
 				return true;
 			
 			case self::MODULE_COLORPICKER:
 				$this->addStylesheet($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', self::MODULE_COLORPICKER);
-				// TODO probably should really have a JavaScript list like the Stylesheet list...
+				$this->addScript($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js', self::MODULE_COLORPICKER);
+				$this->addScriptLiteral("
+					$('.input-group.color').colorpicker();
+				", self::MODULE_COLORPICKER);
 				return true;
 			
 			default:
@@ -600,6 +638,8 @@ class BootstrapSmarty extends \Smarty {
 	public function display($template = 'page.tpl', $cache_id = null, $compile_id = null, $parent = null) {
 		$this->assign('uiMessages', $this->messages);
 		$this->assign('uiStylesheets', $this->stylesheets);
+		$this->assign('uiScripts', $this->scripts);
+		$this->assign('uiScriptLiteral', $this->scriptLiteral);
 		parent::display($template, $cache_id, $compile_id, $parent);
 	}
 }

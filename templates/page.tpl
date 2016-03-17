@@ -79,7 +79,16 @@
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 			<script src="{$BOOTSTRAPSMARTY_URL}/js/ie10-viewport-bug-workaround.js"></script>
 			<script src="{$BOOTSTRAPSMARTY_URL}/js/button-spinner.js"></script>
-			{include file="optional-modules.tpl"}
+			{foreach $uiScripts as $name => $script}
+				<script src="{$script}"{if !empty($name)} name="{$name}"{/if}></script>
+			{/foreach}
+			<script>
+				{foreach $uiScriptLiteral as $name => $snippet}
+					{if !empty($name)}// {$name}{/if}
+					{$snippet}
+					
+				{/foreach}
+			</script>
 			{block name="post-bootstrap-scripts"}{/block}
 		</div>
 	</body>
