@@ -6,7 +6,15 @@ A wrapper for Smarty to set (and maintain) defaults within a Bootstrap UI enviro
 
 ## Install
 
-Include in `composer.json`:
+Because this makes use of front-end files managed via Bower, as well as the back-end managed by Composer, it is _really, really, super-helpful_ to run the following command before trying to work with this package:
+
+```BASH
+composer global require "fxp/composer-asset-plugin:^1.1"
+```
+
+Find out more about [`fxp/composer-asset-plugin`](https://github.com/francoispluchino/composer-asset-plugin) and [Bower](http://bower.io/).
+
+And then, include in `composer.json`:
 
 ```JSON
 "require": {
