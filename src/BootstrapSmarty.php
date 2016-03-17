@@ -37,6 +37,7 @@ class BootstrapSmarty extends \Smarty {
 	/** Module name for eternicode/bootstrap-datepicker */
 	const MODULE_DATEPICKER = 'eternicode/bootstrap-datepicker';
 	const MODULE_COLORPICKER = 'mjolnic/bootstrap-colorpicker';
+	const MODULE_SORTABLE = 'drvic10k/bootstrap-sortable';
 
 
 	/**
@@ -614,6 +615,12 @@ class BootstrapSmarty extends \Smarty {
 				$this->addScriptLiteral("
 					$('.input-group.color').colorpicker();
 				", self::MODULE_COLORPICKER);
+				return true;
+			
+			case self::MODULE_SORTABLE:
+				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-sortable/Contents/bootstrap-sortable.css', self::MODULE_SORTABLE);
+				$this->addScript($assetUrl . '/bower-asset/moment/min/moment.min.js', 'required by ' . self::MODULE_SORTABLE);
+				$this->addScript($assetUrl . '/bower-asset/bootstrap-sortable/Scripts/bootstrap-sortable.js', self::MODULE_SORTABLE);
 				return true;
 			
 			default:
