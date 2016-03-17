@@ -15,6 +15,7 @@ $ui->addMessage('<a href="#">link</a> not link', 'another message');
 $ui->assign('formAction', $_SERVER['PHP_SELF']);
 
 $ui->enable(BootstrapSmarty::MODULE_DATEPICKER);
+$ui->enable(BootstrapSmarty::MODULE_COLORPICKER);
 
 $ui->display("form-page.tpl");
 	

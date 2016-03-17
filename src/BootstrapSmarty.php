@@ -36,6 +36,7 @@ class BootstrapSmarty extends \Smarty {
 	
 	/** Module name for eternicode/bootstrap-datepicker */
 	const MODULE_DATEPICKER = 'eternicode/bootstrap-datepicker';
+	const MODULE_COLORPICKER = 'mjolnic/bootstrap-colorpicker';
 
 
 	/**
@@ -287,6 +288,8 @@ class BootstrapSmarty extends \Smarty {
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
 		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
 		$this->assign('navbarActive', false);
+		$this->assign('MODULE_COLORPICKER', self::MODULE_COLORPICKER);
+		$this->assign('MODULE_DATEPICKER', self::MODULE_DATEPICKER);
 	}
 	
 	/**
@@ -567,6 +570,11 @@ class BootstrapSmarty extends \Smarty {
 		switch ($moduleName) {
 			case self::MODULE_DATEPICKER:
 				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
+				// TODO probably should really have a JavaScript list like the Stylesheet list...
+				return true;
+			
+			case self::MODULE_COLORPICKER:
+				$this->addStylesheet($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', self::MODULE_COLORPICKER);
 				// TODO probably should really have a JavaScript list like the Stylesheet list...
 				return true;
 			

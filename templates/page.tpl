@@ -79,16 +79,7 @@
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 			<script src="{$BOOTSTRAPSMARTY_URL}/js/ie10-viewport-bug-workaround.js"></script>
 			<script src="{$BOOTSTRAPSMARTY_URL}/js/button-spinner.js"></script>
-			{if !empty($uiStylesheets['eternicode/bootstrap-datepicker'])}
-				<script src="{$BOOTSTRAPSMARTY_URL}{if strpos($BOOTSTRAPSMARTY_URL, '/vendor/') !== false}/../..{else}/vendor{/if}/bower-asset/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-				<script>
-					$('.input-group.date').datepicker({
-						orientation: 'top auto',
-					    autoclose: true,
-					    todayHighlight: true
-					});
-				</script>
-			{/if}
+			{include file="optional-modules.tpl"}
 			{block name="post-bootstrap-scripts"}{/block}
 		</div>
 	</body>
