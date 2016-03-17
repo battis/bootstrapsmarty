@@ -1,12 +1,12 @@
 <?php
 
-require_once('common.inc.php');
+require_once '../vendor/autoload.php';
 
 use \Battis\BootstrapSmarty\BootstrapSmarty;
 use \Battis\BootstrapSmarty\NotificationMessage;
 
 $ui = BootstrapSmarty::getSmarty(false);
-$ui->addTemplateDir(__DIR__ .'/templates');
+$ui->addTemplateDir(__DIR__ . '/templates');
 
 $ui->addMessage('foo', '<a href="#">link1</a> <a class="test" href="#">link2</a> not link', NotificationMessage::ERROR);
 $ui->addMessage('foo', 'bar', NotificationMessage::GOOD);

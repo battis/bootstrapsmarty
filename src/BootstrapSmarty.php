@@ -70,6 +70,10 @@ class BootstrapSmarty extends \Smarty {
 	
 	/** @var string[] $stylesheets List of stylesheets to be applied */
 	private $stylesheets = array();
+	
+	
+	/** var string $url URL of BootstrapSmarty instance */
+	private $url;
 		
 	/**
 	 * Test a file systems directory for writeability by the Apache user
@@ -273,12 +277,13 @@ class BootstrapSmarty extends \Smarty {
 			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__) . '/css/BootstrapSmarty.css';
 		
 		/* set some reasonable defaults */
-		$this->assign('BOOTSTRAPSMARTY_URL', (
+		$this->url = (
 				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
 					'http://' :
 					'https://'
 			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__));
+			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__);
+		$this->assign('BOOTSTRAPSMARTY_URL', $this->url);
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
 		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
 		$this->assign('navbarActive', false);
@@ -558,9 +563,10 @@ class BootstrapSmarty extends \Smarty {
 	 * @see https://github.com/eternicode/bootstrap-datepicker eternicode/bootstrap-datepicker
 	 **/
 	public function enable($moduleName) {
+		$assetUrl = $this->url . (preg_match('|/vendor/|', __DIR__) ? '/../..' : '/vendor');
 		switch ($moduleName) {
 			case self::MODULE_DATEPICKER:
-				$this->addStylesheet(dirname($this->getStylesheet(self::UI_KEY)[self::UI_KEY]) . '/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
+				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
 				// TODO probably should really have a JavaScript list like the Stylesheet list...
 				return true;
 			

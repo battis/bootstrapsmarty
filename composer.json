@@ -10,10 +10,11 @@
     ],
     "require": {
         "smarty/smarty": "3.1.*",
-        "battis/data-utilities": "dev-master"
-    },
-    "suggest": {
-	    "eternicode/bootstrap-datepicker": "The full Bootstrap Datepicker package for local install"    
+        "battis/data-utilities": "dev-master",
+        "fxp/composer-asset-plugin": "^1.1",
+        "bower-asset/xaguilars-bootstrap-colorpicker" : "dev-master",
+        "bower-asset/bootstrap-datepicker": "dev-master",
+        "bower-asset/bootstrap-sortable": "dev-master"
     },
     "autoload": {
 	    "psr-4": {
@@ -23,7 +24,8 @@
     "archive": {
 	    "exclude": [
 		    "/doc/",
-		    "phpdoc.dist.xml"
+		    "phpdoc.dist.xml",
+                    "/tests/"
 	    ]
     }
 }
