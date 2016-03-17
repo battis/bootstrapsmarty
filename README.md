@@ -1,5 +1,7 @@
 # BootstrapSmarty
 
+[![Latest Version](https://img.shields.io/packagist/v/battis/bootstrapsmarty.svg)](https://packagist.org/packages/battis/bootstrapsmarty)
+
 A wrapper for Smarty to set (and maintain) defaults within a Bootstrap UI environment
 
 ## Install
