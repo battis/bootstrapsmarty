@@ -281,7 +281,7 @@ class BootstrapSmarty extends \Smarty {
 					'http://' :
 					'https://'
 			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__);
+			$_SERVER['SERVER_NAME'] . DataUtilities::overlap(explode('?', $_SERVER['REQUEST_URI'])[0], dirname(__DIR__));
 		$this->assign('BOOTSTRAPSMARTY_URL', $this->url);
 		$this->addStylesheet("{$this->url}/css/BootstrapSmarty.css", self::UI_KEY);
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', urldecode(basename($_SERVER['REQUEST_URI'], '.php')))));
