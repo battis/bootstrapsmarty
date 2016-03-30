@@ -275,24 +275,19 @@ class BootstrapSmarty extends \Smarty {
 		self::testWriteableDirectory($this->getCompileDir());
 		self::testWriteableDirectory($this->getCacheDir());
 		
-		/* set some reasonable defaults */		
+		/* set some reasonable defaults */
 		$this->url =
 			(!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
 	                'http://' :
 	                'https://'
 	        ) .
 	        $_SERVER['SERVER_NAME'] .
-	        preg_replace(
-	                '%/vendor/?.*%',
-	                '',
-	                str_replace(
-	                        $_SERVER['CONTEXT_DOCUMENT_ROOT'],
-	                        '',
-	                        $_SERVER['SCRIPT_FILE_NAME']
-	                )
-	        ) .
 	        $_SERVER['CONTEXT_PREFIX'] .
-	        '/vendor/battis/bootstrapsmarty';
+	        str_replace(
+		        $_SERVER['CONTEXT_DOCUMENT_ROOT'],
+		        '',
+		        DataUtilities::overlap(dirname(__DIR__), $_SERVER['SCRIPT_FILENAME'])
+	        );
 		$this->assign('BOOTSTRAPSMARTY_URL', $this->url);
 		$this->addStylesheet("{$this->url}/css/BootstrapSmarty.css", self::UI_KEY);
 		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', urldecode(basename($_SERVER['REQUEST_URI'], '.php')))));
