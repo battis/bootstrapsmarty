@@ -275,14 +275,6 @@ class BootstrapSmarty extends \Smarty {
 		self::testWriteableDirectory($this->getCompileDir());
 		self::testWriteableDirectory($this->getCacheDir());
 		
-		/* Define base stylesheet */
-		$this->stylesheets[self::UI_KEY] = (
-				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
-					'http://' :
-					'https://'
-			) .
-			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__) . '/css/BootstrapSmarty.css';
-		
 		/* set some reasonable defaults */
 		$this->url = (
 				!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ?
@@ -291,8 +283,9 @@ class BootstrapSmarty extends \Smarty {
 			) .
 			$_SERVER['SERVER_NAME'] . preg_replace("|^{$_SERVER['DOCUMENT_ROOT']}(.*)/src$|", '$1', __DIR__);
 		$this->assign('BOOTSTRAPSMARTY_URL', $this->url);
-		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename($_SERVER['REQUEST_URI'], '.php'))));
-		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', basename(dirname($_SERVER['REQUEST_URI'])))));
+		$this->addStylesheet("{$this->url}/css/BootstrapSmarty.css", self::UI_KEY);
+		$this->assign('name', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', urldecode(basename($_SERVER['REQUEST_URI'], '.php')))));
+		$this->assign('category', DataUtilities::titleCase(preg_replace('/[\-_]+/', ' ', urldecode(basename(dirname($_SERVER['REQUEST_URI']))))));
 		$this->assign('navbarActive', false);
 		$this->assign('MODULE_COLORPICKER', self::MODULE_COLORPICKER);
 		$this->assign('MODULE_DATEPICKER', self::MODULE_DATEPICKER);
