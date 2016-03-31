@@ -286,7 +286,7 @@ class BootstrapSmarty extends \Smarty {
 	        str_replace(
 		        $_SERVER['CONTEXT_DOCUMENT_ROOT'],
 		        '',
-		        DataUtilities::overlap(dirname(__DIR__), $_SERVER['SCRIPT_FILENAME'])
+		        dirname(__DIR__)
 	        );
 		$this->assign('BOOTSTRAPSMARTY_URL', $this->url);
 		$this->addStylesheet("{$this->url}/css/BootstrapSmarty.css", self::UI_KEY);
