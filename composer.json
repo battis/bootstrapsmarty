@@ -12,7 +12,7 @@
         "smarty/smarty": "3.1.*",
         "battis/data-utilities": "dev-master",
         "fxp/composer-asset-plugin": "^1.1",
-        "bower-asset/xaguilars-bootstrap-colorpicker" : "dev-master",
+        "bower-asset/bootstrap-colorpicker" : "dev-master",
         "bower-asset/bootstrap-datepicker": "dev-master",
         "bower-asset/bootstrap-sortable": "dev-master"
     },

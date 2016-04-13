@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8aa3c39c85d3a4ad3cb94bf8e3e92906",
-    "content-hash": "eb91a1314a55188c9136c210ce4667e6",
+    "hash": "d5348d937d5f528246ffacefa571a596",
+    "content-hash": "34a503d87be52124ff5a369c5442341d",
     "packages": [
         {
             "name": "battis/data-utilities",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/battis/data-utilities.git",
-                "reference": "d1f10e9d8e976a9f74c2aa80f648183a69bc15e6"
+                "reference": "1de361ebe4e180a17d36a59b199f0abd02503c9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/battis/data-utilities/zipball/d1f10e9d8e976a9f74c2aa80f648183a69bc15e6",
-                "reference": "d1f10e9d8e976a9f74c2aa80f648183a69bc15e6",
+                "url": "https://api.github.com/repos/battis/data-utilities/zipball/1de361ebe4e180a17d36a59b199f0abd02503c9f",
+                "reference": "1de361ebe4e180a17d36a59b199f0abd02503c9f",
                 "shasum": ""
             },
             "require-dev": {
@@ -41,7 +41,7 @@
                 }
             ],
             "description": "A handful of useful helper functions to process data",
-            "time": "2016-03-30 16:13:10"
+            "time": "2016-03-31 01:33:03"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -91,6 +91,42 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/bootstrap-colorpicker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mjolnic/bootstrap-colorpicker.git",
+                "reference": "7847a84ab7ec3b17474fb16b7e68fc02838efe52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mjolnic/bootstrap-colorpicker/zipball/7847a84ab7ec3b17474fb16b7e68fc02838efe52",
+                "reference": "7847a84ab7ec3b17474fb16b7e68fc02838efe52",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap": ">=2",
+                "bower-asset/jquery": ">=1.10"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/css/bootstrap-colorpicker.css",
+                    "dist/js/bootstrap-colorpicker.js"
+                ],
+                "bower-asset-ignore": [
+                    "\\.*",
+                    "/index.html",
+                    "/package.json",
+                    "/composer.json",
+                    "/Gruntfile.js",
+                    "/.travis.yml",
+                    "/travis.sh",
+                    "/server.js"
+                ]
+            }
         },
         {
             "name": "bower-asset/bootstrap-datepicker",
@@ -163,16 +199,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "086d381cd2f3b4b8b0af85ecb2c9593a61e5b4bd"
+                "reference": "af22a351b2ea5801ffb1695abb3bb34d5bed9198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/086d381cd2f3b4b8b0af85ecb2c9593a61e5b4bd",
-                "reference": "086d381cd2f3b4b8b0af85ecb2c9593a61e5b4bd",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/af22a351b2ea5801ffb1695abb3bb34d5bed9198",
+                "reference": "af22a351b2ea5801ffb1695abb3bb34d5bed9198",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -230,53 +266,17 @@
             }
         },
         {
-            "name": "bower-asset/xaguilars-bootstrap-colorpicker",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mjolnic/bootstrap-colorpicker.git",
-                "reference": "642c84bf4a84aaa54dd10079bf441385be8d5e69"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mjolnic/bootstrap-colorpicker/zipball/642c84bf4a84aaa54dd10079bf441385be8d5e69",
-                "reference": "642c84bf4a84aaa54dd10079bf441385be8d5e69",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/bootstrap": ">=2",
-                "bower-asset/jquery": ">=1.10"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "dist/css/bootstrap-colorpicker.css",
-                    "dist/js/bootstrap-colorpicker.js"
-                ],
-                "bower-asset-ignore": [
-                    "\\.*",
-                    "/index.html",
-                    "/package.json",
-                    "/composer.json",
-                    "/Gruntfile.js"
-                ],
-                "branch-alias": {
-                    "dev-master": "2.3.0-dev"
-                }
-            }
-        },
-        {
             "name": "fxp/composer-asset-plugin",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/francoispluchino/composer-asset-plugin.git",
-                "reference": "bae7a15712e9339a2439aeca3b7c5ecf65b087d1"
+                "reference": "62d2cdc302de2534f3985a1a2f5d4a783de4a5eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/francoispluchino/composer-asset-plugin/zipball/bae7a15712e9339a2439aeca3b7c5ecf65b087d1",
-                "reference": "bae7a15712e9339a2439aeca3b7c5ecf65b087d1",
+                "url": "https://api.github.com/repos/francoispluchino/composer-asset-plugin/zipball/62d2cdc302de2534f3985a1a2f5d4a783de4a5eb",
+                "reference": "62d2cdc302de2534f3985a1a2f5d4a783de4a5eb",
                 "shasum": ""
             },
             "require": {
@@ -319,7 +319,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2016-02-25 16:35:08"
+            "time": "2016-04-01 15:27:16"
         },
         {
             "name": "smarty/smarty",
@@ -587,16 +587,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "fe33716763b604ade4cb442c0794f5bd5ad73004"
+                "reference": "2431befdd451fac43fbcde94d1a92fb3b8b68f86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/fe33716763b604ade4cb442c0794f5bd5ad73004",
-                "reference": "fe33716763b604ade4cb442c0794f5bd5ad73004",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2431befdd451fac43fbcde94d1a92fb3b8b68f86",
+                "reference": "2431befdd451fac43fbcde94d1a92fb3b8b68f86",
                 "shasum": ""
             },
             "require": {
@@ -614,7 +614,7 @@
             },
             "suggest": {
                 "ext-dom": "*",
-                "ext-xdebug": ">=2.2.1",
+                "ext-xdebug": ">=2.4.0",
                 "ext-xmlwriter": "*"
             },
             "type": "library",
@@ -646,7 +646,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-03-03 08:49:08"
+            "time": "2016-04-08 08:14:53"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -828,16 +828,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.2.12",
+            "version": "5.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6f0948bab32270352f97d1913d82a49338dcb0da"
+                "reference": "2c6da3536035617bae3fe3db37283c9e0eb63ab3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6f0948bab32270352f97d1913d82a49338dcb0da",
-                "reference": "6f0948bab32270352f97d1913d82a49338dcb0da",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2c6da3536035617bae3fe3db37283c9e0eb63ab3",
+                "reference": "2c6da3536035617bae3fe3db37283c9e0eb63ab3",
                 "shasum": ""
             },
             "require": {
@@ -852,13 +852,14 @@
                 "phpunit/php-code-coverage": "^3.3.0",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
-                "phpunit/php-timer": ">=1.0.6",
-                "phpunit/phpunit-mock-objects": ">=3.0.5",
+                "phpunit/php-timer": "^1.0.6",
+                "phpunit/phpunit-mock-objects": "^3.1",
                 "sebastian/comparator": "~1.1",
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "~1.3",
                 "sebastian/exporter": "~1.2",
                 "sebastian/global-state": "~1.0",
+                "sebastian/object-enumerator": "~1.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
                 "symfony/yaml": "~2.1|~3.0"
@@ -872,7 +873,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.2.x-dev"
+                    "dev-master": "5.3.x-dev"
                 }
             },
             "autoload": {
@@ -898,7 +899,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-03-15 05:59:58"
+            "time": "2016-04-12 16:20:08"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1285,6 +1286,52 @@
             "time": "2015-10-12 03:26:01"
         },
         {
+            "name": "sebastian/object-enumerator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/object-enumerator.git",
+                "reference": "d4ca2fb70344987502567bc50081c03e6192fb26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/d4ca2fb70344987502567bc50081c03e6192fb26",
+                "reference": "d4ca2fb70344987502567bc50081c03e6192fb26",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "sebastian/recursion-context": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Traverses array structures and object graphs to enumerate all referenced objects",
+            "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
+            "time": "2016-01-28 13:25:10"
+        },
+        {
             "name": "sebastian/recursion-context",
             "version": "1.0.2",
             "source": {
@@ -1476,7 +1523,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "battis/data-utilities": 20,
-        "bower-asset/xaguilars-bootstrap-colorpicker": 20,
+        "bower-asset/bootstrap-colorpicker": 20,
         "bower-asset/bootstrap-datepicker": 20,
         "bower-asset/bootstrap-sortable": 20
     },
