@@ -20,42 +20,11 @@
 		{block name="post-bootstrap-stylesheets"}{/block}
 		
 		{block name="head-scripts"}{/block}
-
-		<!-- http://stackoverflow.com/a/25253988 -->
-		<script>
-		function onReady(callback) {
-		    var intervalID = window.setInterval(checkReady, 1000);
-		    function checkReady() {
-		        if (document.getElementsByTagName('body')[0] !== undefined) {
-		            window.clearInterval(intervalID);
-		            callback.call(this);
-		        }
-		    }
-		}
-		
-		function show(id, value) {
-		    document.getElementById(id).style.display = value ? 'block' : 'none';
-		}
-		
-		onReady(function () {
-		    show('page-content', true);
-		    show('page-loading', false);
-		});
-		</script>
-		<style>
-			#page-content {
-				display: none;
-			}
-			#page-loading {
-				display: block;
-			}
-		</style>
 	</head>
 	<body>
-		<div id="page-loading">
-			{include file="page-loading.tpl"}
-		</div>
-		<div id="page-content">
+		{block name="page-content"}
+		<div class="page-content">
+		
 			{block name="header"}
 				{include file="header.tpl"}
 			{/block}
@@ -91,5 +60,6 @@
 			</script>
 			{block name="post-bootstrap-scripts"}{/block}
 		</div>
+		{/block}
 	</body>
 </html>
