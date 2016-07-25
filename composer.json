@@ -12,13 +12,14 @@
         "smarty/smarty": "~3.1",
         "battis/data-utilities": "~0.1",
         "fxp/composer-asset-plugin": "^1.1",
-        "bower-asset/bootstrap-colorpicker" : "dev-master",
-        "bower-asset/bootstrap-datepicker": "dev-master",
-        "bower-asset/bootstrap-sortable": "dev-master"
+        "bower-asset/bootstrap-colorpicker-2.x": "~2.3",
+        "bower-asset/bootstrap-datepicker-1.x": "~1.6",
+        "bower-asset/bootstrap-sortable-2.x": "~2.0"
     },
     "autoload": {
 	    "psr-4": {
 	    	"Battis\\BootstrapSmarty\\": "src/"
 	    }
-    }
+    },
+    "minimum-stability": "stable"
 }

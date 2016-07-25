@@ -32,8 +32,8 @@ class BootstrapSmarty extends \Smarty {
 	 * config directories
 	 **/
 	const UI_KEY = 'BootstrapSmarty';
-	
-	
+
+
 	/** Module name for eternicode/bootstrap-datepicker */
 	const MODULE_DATEPICKER = 'eternicode/bootstrap-datepicker';
 	const MODULE_COLORPICKER = 'mjolnic/bootstrap-colorpicker';
@@ -45,19 +45,19 @@ class BootstrapSmarty extends \Smarty {
 	 *		templates (always included in template directories list)
 	 **/
 	private $uiTemplateDir = null;
-	
+
 	/**
 	 * @var string[] Directory used by BootstrapSmarty for base configs
 	 *		(always included in config directories list)
 	 **/
 	private $uiConfigDir = null;
-	
+
 	/**
 	 * @var string Default directory used by BootstrapSmarty for
 	 *		compiled templates (can be overridden)
 	 **/
 	private $uiCompileDir = null;
-	
+
 	/**
 	 * @var string Default directory used by BootstrapSmarty for cache
 	 *		files (can be overriden)
@@ -69,19 +69,19 @@ class BootstrapSmarty extends \Smarty {
 	 *		to be displayed
 	 **/
 	private $messages = array();
-	
+
 	/** @var string[] $stylesheets List of stylesheets to be applied */
 	private $stylesheets = array();
-	
+
 	/** @var string[] $scripts List of Javascript files to be loaded */
 	private $scripts = array();
-	
+
 	/** @var string[] #scriptSnippets List of Javascript snippets to be run after scripts are loaded */
 	private $scriptSnippets = array();
-	
+
 	/** var st$ing $url URL of BootstrapSmarty instance */
 	private $url;
-		
+
 	/**
 	 * Test a file systems directory for writeability by the Apache user
 	 *
@@ -111,7 +111,7 @@ class BootstrapSmarty extends \Smarty {
 		} elseif (!file_exists($directory)) {
 			$success = mkdir($directory);
 		}
-		
+
 		if (!$success) {
 			throw new BootstrapSmarty_Exception(
 				"The directory '{$directory}' cannot be created or cannot be made writeable",
@@ -119,7 +119,7 @@ class BootstrapSmarty extends \Smarty {
 			);
 		}
 	}
-	
+
 	/**
 	 * Test a file system directory for readability by the Apache user
 	 *
@@ -140,7 +140,7 @@ class BootstrapSmarty extends \Smarty {
 	 **/
 	private static function testReadableDirectory($directory) {
 		$success = false;
-		
+
 		if (file_exists($directory)) {
 			if (is_dir($directory)) {
 				if (is_readable($directory)) {
@@ -158,7 +158,7 @@ class BootstrapSmarty extends \Smarty {
 				BootstrapSmarty_Exception::MISSING_FILES
 			);
 		}
-		
+
 		if (!$success) {
 			throw new BootstrapSmarty_Exception(
 				"The directory '{$directory}' is not readable",
@@ -166,7 +166,7 @@ class BootstrapSmarty extends \Smarty {
 			);
 		}
 	}
-	
+
 	/**
 	 * Build an array of directories appending the BootstrapSmarty defaults
 	 *
@@ -177,10 +177,10 @@ class BootstrapSmarty extends \Smarty {
 	 *		a string or an array of strings (defaults to true, an array of strings)
 	 **/
 	private static function appendUiDefaults($appDir, $uiDir, $arrayResult = true) {
-		
+
 		/* FIXME Currently assumes that $uiDir will always be passed correctly as
 		   either a string or an array of strings, but does no checks */
-		
+
 		if ($arrayResult) {
 			if (!empty($appDir)) {
 				if (is_array($appDir)) {
@@ -199,7 +199,7 @@ class BootstrapSmarty extends \Smarty {
 			}
 		}
 	}
-	
+
 	/**
 	 * Return the singleton instance of BootstrapSmarty
 	 *
@@ -221,7 +221,7 @@ class BootstrapSmarty extends \Smarty {
 		}
 		return self::$singleton;
 	}
-	
+
 	/**
 	 * Construct the singleton instance of BootstrapSmarty
 	 *
@@ -252,19 +252,19 @@ class BootstrapSmarty extends \Smarty {
 			parent::__construct();
 			self::$singleton = $this;
 		}
-		
+
 		/* Default to local directories for use by Smarty */
 		$this->uiTemplateDir = array(self::UI_KEY => realpath(__DIR__ . '/../templates'));
 		$this->uiConfigDir = array(self::UI_KEY => realpath(__DIR__ . '/../configs'));
 		$this->uiCompileDir = realpath(__DIR__ . '/../templates_c');
 		$this->uiCacheDir = realpath(__DIR__ . '/../cache');
-		
+
 		/* Apply user additions and alternates */
 		$this->setTemplateDir($template);
 		$this->setConfigDir($config);
 		$this->setCompileDir($compile);
 		$this->setCacheDir($cache);
-		
+
 		/* Test all directories for use by Smarty */
 		foreach($this->getTemplateDir() as $key => $dir) {
 			self::testReadableDirectory($dir);
@@ -274,7 +274,7 @@ class BootstrapSmarty extends \Smarty {
 		}
 		self::testWriteableDirectory($this->getCompileDir());
 		self::testWriteableDirectory($this->getCacheDir());
-		
+
 		/* set some reasonable defaults */
 		$this->url = DataUtilities::URLfromPath(dirname(__DIR__));
 		$this->assign('BOOTSTRAPSMARTY_URL', $this->url);
@@ -286,7 +286,7 @@ class BootstrapSmarty extends \Smarty {
 		$this->assign('MODULE_DATEPICKER', self::MODULE_DATEPICKER);
 		$this->assign('MODULE_SORTABLE', self::MODULE_SORTABLE);
 	}
-	
+
 	/**
 	 * Change any necessary properties after a shallow copy cloning
 	 *
@@ -304,7 +304,7 @@ class BootstrapSmarty extends \Smarty {
 			BootstrapSmarty_Exception::SINGLETON
 		);
 	}
-	
+
 	/**
 	 * Reconstruct any resources used by an object upon unserialize()
 	 *
@@ -322,7 +322,7 @@ class BootstrapSmarty extends \Smarty {
 			BootstrapSmarty_Exception::SINGLETON
 		);
 	}
-	
+
 	/**
 	 * Set the directories where templates are stored
 	 *
@@ -344,7 +344,7 @@ class BootstrapSmarty extends \Smarty {
 			return parent::setTemplateDir(self::appendUiDefaults($template, $this->uiTemplateDir));
 		}
 	}
-	
+
 	/**
 	 * Set the directories where configs are stored
 	 *
@@ -360,11 +360,11 @@ class BootstrapSmarty extends \Smarty {
 	public function setConfigDir($config) {
 		return parent::setConfigDir(self::appendUiDefaults($config, $this->uiConfigDir));
 	}
-	
+
 	/**
 	 * Set the directory where compiled templates are stored
 	 *
-	 * Allows $compile to be empty (in which case BootstrapSmarty::$uiCompileDir 
+	 * Allows $compile to be empty (in which case BootstrapSmarty::$uiCompileDir
 	 * default is substituted for the empty value)
 	 *
 	 * @param string $compile Alternative Smarty compiled template directory
@@ -388,7 +388,7 @@ class BootstrapSmarty extends \Smarty {
 	public function setCacheDir($cache) {
 		return parent::setCacheDir(self::appendUiDefaults($cache, $this->uiCacheDir, false));
 	}
-	
+
 	/**
 	 * Add additional template directory
 	 *
@@ -449,7 +449,7 @@ class BootstrapSmarty extends \Smarty {
 			return parent::setConfigDir($self::appendUiDefaults($config, $this->getConfigDir()));
 		}
 	}
-	
+
 	/**
 	 * Add additional CSS stylesheet
 	 *
@@ -471,7 +471,7 @@ class BootstrapSmarty extends \Smarty {
 		if (!empty($key)) {
 			$_key = $key;
 		}
-		
+
 		/* construct the array of additional stylesheets */
 		$_stylesheet = array();
 		/* Is $stylesheet an associative array? If so, just assume that the user knows
@@ -507,11 +507,11 @@ class BootstrapSmarty extends \Smarty {
 				BootstrapSmarty_Exception::NOT_A_URL
 			);
 		}
-		
+
 		/* append or replace (if $key is not empty) stylesheets */
 		$this->stylesheets = array_replace($this->stylesheets, $_stylesheet);
 	}
-	
+
 	/**
 	 * Return list of stylesheets, optionally matching $key
 	 *
@@ -538,7 +538,7 @@ class BootstrapSmarty extends \Smarty {
 			return $result;
 		}
 	}
-	
+
 	/**
 	 * Add a script to the list to be loaded after Bootstrap and JQuery
 	 *
@@ -552,7 +552,7 @@ class BootstrapSmarty extends \Smarty {
 			$this->scripts[$key] = $script;
 		}
 	}
-	
+
 	/**
 	 * Add a snippet of Javascript to run after script files are loaded
 	 *
@@ -566,7 +566,7 @@ class BootstrapSmarty extends \Smarty {
 			$this->scriptSnippets[$key] = $snippet;
 		}
 	}
-	
+
 	/**
 	 * Add a message to be diplayed to the user
 	 *
@@ -578,10 +578,10 @@ class BootstrapSmarty extends \Smarty {
 	public function addMessage($title, $content, $class = NotificationMessage::INFO) {
 		$this->messages[] = new NotificationMessage($title, $content, $class);
 	}
-	
+
 	/**
 	 * Add datepicker functionality
-	 * 
+	 *
 	 * @param string $moduleName
 	 *
 	 * @return boolean `TRUE` on success, `FALSE` on failure
@@ -592,8 +592,8 @@ class BootstrapSmarty extends \Smarty {
 		$assetUrl = $this->url . (preg_match('|/vendor/|', __DIR__) ? '/../..' : '/vendor');
 		switch ($moduleName) {
 			case self::MODULE_DATEPICKER:
-				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
-				$this->addScript($assetUrl . '/bower-asset/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js', self::MODULE_DATEPICKER);
+				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-datepicker-1.x/dist/css/bootstrap-datepicker.min.css', self::MODULE_DATEPICKER);
+				$this->addScript($assetUrl . '/bower-asset/bootstrap-datepicker-1.x/dist/js/bootstrap-datepicker.min.js', self::MODULE_DATEPICKER);
 				$this->addScriptSnippet("
 					$('.input-group.date').datepicker({
 						orientation: 'top auto',
@@ -602,21 +602,21 @@ class BootstrapSmarty extends \Smarty {
 					});
 				", self::MODULE_DATEPICKER);
 				return true;
-			
+
 			case self::MODULE_COLORPICKER:
-				$this->addStylesheet($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', self::MODULE_COLORPICKER);
-				$this->addScript($assetUrl . '/bower-asset/xaguilars-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js', self::MODULE_COLORPICKER);
+				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-colorpicker-2.x/dist/css/bootstrap-colorpicker.min.css', self::MODULE_COLORPICKER);
+				$this->addScript($assetUrl . '/bower-asset/bootstrap-colorpicker-2.x/dist/js/bootstrap-colorpicker.min.js', self::MODULE_COLORPICKER);
 				$this->addScriptSnippet("
 					$('.input-group.color').colorpicker();
 				", self::MODULE_COLORPICKER);
 				return true;
-			
+
 			case self::MODULE_SORTABLE:
-				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-sortable/Contents/bootstrap-sortable.css', self::MODULE_SORTABLE);
+				$this->addStylesheet($assetUrl . '/bower-asset/bootstrap-sortable-1.x/Contents/bootstrap-sortable.css', self::MODULE_SORTABLE);
 				$this->addScript($assetUrl . '/bower-asset/moment/min/moment.min.js', 'required by ' . self::MODULE_SORTABLE);
-				$this->addScript($assetUrl . '/bower-asset/bootstrap-sortable/Scripts/bootstrap-sortable.js', self::MODULE_SORTABLE);
+				$this->addScript($assetUrl . '/bower-asset/bootstrap-sortable-1.x/Scripts/bootstrap-sortable.js', self::MODULE_SORTABLE);
 				return true;
-			
+
 			default:
 				return false;
 		}
@@ -653,18 +653,18 @@ class BootstrapSmarty extends \Smarty {
 class BootstrapSmarty_Exception extends \Exception {
 	/** Violation of singleton design pattern */
 	const SINGLETON = 1;
-	
+
 	/** A directory that needs to be readable is not */
 	const UNREADABLE_DIRECTORY = 2;
-	
+
 	/** A directory that needs to be writable is not */
 	const UNWRITABLE_DIRECTORY = 3;
-	
+
 	/** A file or directory that should exist does not */
 	const MISSING_FILES = 4;
-	
+
 	/** A URL was expected, but not received */
 	const NOT_A_URL = 5;
 }
-	
+
 ?>

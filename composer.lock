@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5c2c05c2b1a786f1a3a5e6e9290074ae",
-    "content-hash": "6257ab649b010fdc67da2cf43c3d517f",
+    "hash": "ac943b9697e0d78747049276884e6c50",
+    "content-hash": "bafbba611b2828c389166992c2ddbea7",
     "packages": [
         {
             "name": "battis/data-utilities",
@@ -93,17 +93,17 @@
             ]
         },
         {
-            "name": "bower-asset/bootstrap-colorpicker",
-            "version": "dev-master",
+            "name": "bower-asset/bootstrap-colorpicker-2.x",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mjolnic/bootstrap-colorpicker.git",
-                "reference": "7847a84ab7ec3b17474fb16b7e68fc02838efe52"
+                "reference": "59f06437c86b7c0e074aee8a699819fd1c07a173"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mjolnic/bootstrap-colorpicker/zipball/7847a84ab7ec3b17474fb16b7e68fc02838efe52",
-                "reference": "7847a84ab7ec3b17474fb16b7e68fc02838efe52",
+                "url": "https://api.github.com/repos/mjolnic/bootstrap-colorpicker/zipball/59f06437c86b7c0e074aee8a699819fd1c07a173",
+                "reference": "59f06437c86b7c0e074aee8a699819fd1c07a173",
                 "shasum": ""
             },
             "require": {
@@ -129,17 +129,17 @@
             }
         },
         {
-            "name": "bower-asset/bootstrap-datepicker",
-            "version": "dev-master",
+            "name": "bower-asset/bootstrap-datepicker-1.x",
+            "version": "v1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eternicode/bootstrap-datepicker.git",
-                "reference": "67a348a3bc51b34b1500186bc3a6ec0b18b54b47"
+                "reference": "f4df9ac6679b15b12157324c556e0da1c628af6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eternicode/bootstrap-datepicker/zipball/67a348a3bc51b34b1500186bc3a6ec0b18b54b47",
-                "reference": "67a348a3bc51b34b1500186bc3a6ec0b18b54b47",
+                "url": "https://api.github.com/repos/eternicode/bootstrap-datepicker/zipball/f4df9ac6679b15b12157324c556e0da1c628af6e",
+                "reference": "f4df9ac6679b15b12157324c556e0da1c628af6e",
                 "shasum": ""
             },
             "require": {
@@ -158,8 +158,8 @@
             ]
         },
         {
-            "name": "bower-asset/bootstrap-sortable",
-            "version": "dev-master",
+            "name": "bower-asset/bootstrap-sortable-2.x",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drvic10k/bootstrap-sortable.git",
@@ -180,10 +180,7 @@
                 "bower-asset-main": "Scripts/bootstrap-sortable.js",
                 "bower-asset-ignore": [
                     "Scripts/moment.min.js"
-                ],
-                "branch-alias": {
-                    "dev-master": "2.0.0-dev"
-                }
+                ]
             },
             "license": [
                 "MIT"
@@ -380,11 +377,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "bower-asset/bootstrap-colorpicker": 20,
-        "bower-asset/bootstrap-datepicker": 20,
-        "bower-asset/bootstrap-sortable": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
