@@ -46,18 +46,6 @@ class BootstrapSmarty extends \Smarty
     const MODULE_SORTABLE = 'drvic10k/bootstrap-sortable';
 
     /**
-     * @var string[] Directory used by BootstrapSmarty for base
-     *        templates (always included in template directories list)
-     **/
-    private $uiTemplateDir = [];
-
-    /**
-     * @var string[] Directory used by BootstrapSmarty for base configs
-     *        (always included in config directories list)
-     **/
-    private $uiConfigDir = [];
-
-    /**
      * @var NotificationMessage[] List of pending notification messages
      *        to be displayed
      **/
@@ -180,14 +168,12 @@ class BootstrapSmarty extends \Smarty
         }
 
         /* Default to local directories for use by Smarty */
-        $this->uiTemplateDir[static::UI_KEY] = realpath(__DIR__ . '/../templates');
-        $this->setTemplateDir($this->uiTemplateDir);
-        $this->uiConfigDir[static::UI_KEY] = realpath(__DIR__ . '/../configs');
-        $this->setConfigDir($this->uiConfigDir);
+        $this->setTemplateDir([static::UI_KEY => realpath(__DIR__ . '/../templates')]);
+        $this->setConfigDir([static::UI_KEY => realpath(__DIR__ . '/../configs')]);
 
         /* Apply user additions and alternates */
         if (!empty($template)) {
-            $this->addTemplateDir($template);
+            $this->prependTemplateDir($template);
         }
         if (!empty($config)) {
             $this->addConfigDir($config);
@@ -280,43 +266,27 @@ class BootstrapSmarty extends \Smarty
     }
 
     /**
-     * Set the directories where templates are stored
+     * Prepend a template directory to the list of template directories
      *
-     * Preserves default BootstrapSmarty template directory to allow for extensions
-     * and applications of the base templates by application templates.
+     * Smarty searches the list of template directories for a particular
+     * template in the order in which the directories are listed and uses the
+     * first template encountered. Thus, if you want to override an existing
+     * template file, your overriding template directory needs to be prepended
+     * to that list.
      *
-     * @param string|string[] $template Additional Smarty template directories
-     * @param boolean $isConfig (Optional) Defaults to FALSE, set to TRUE when
-     *        Smarty::setTemplateDir() is aliased by Smarty::setConfigDir()
-     *
-     * @used-by BootstrapSmarty::setConfigDir()
-     *
-     * @see http://www.smarty.net/docs/en/api.set.template.dir.tpl Smarty::setTemplateDir()
-     **/
-    public function setTemplateDir($template, $isConfig = false)
-    {
-        if ($isConfig) {
-            return parent::setTemplateDir($template, $isConfig);
+     * @param string $template Path to template directory
+     * @param string $key (Optional) Unique identifier for template directory
+     * @return Smarty Current Smarty instance for chaining
+     */
+    public function prependTemplateDir($template, $key = false) {
+        $templates = $this->getTemplateDir();
+        if (empty($key)) {
+            $this->setTemplateDir($template);
         } else {
-            return parent::setTemplateDir($this->uiTemplateDir)->addTemplateDir($template);
+            $this->setTemplateDir([$key => $template]);
         }
-    }
-
-    /**
-     * Set the directories where configs are stored
-     *
-     * Preserves default BootstrapSmarty config directory to allow for extensions
-     * and applications of the base configs by application configs.
-     *
-     * @param string|string[] $config Additional Smarty config directories
-     *
-     * @uses BootstrapSmarty::setTemplateDir() to effect directory-mapping
-     *
-     * @see http://www.smarty.net/docs/en/api.set.config.dir.tpl Smarty::setConfigDir()
-     **/
-    public function setConfigDir($config)
-    {
-        return parent::setConfigDir($this->uiConfigDir)->addConfigDir($config);
+        $this->addTemplateDir($templates);
+        return $this;
     }
 
     /**
@@ -534,10 +504,12 @@ class BootstrapSmarty extends \Smarty
      **/
     public function display($template = 'page.tpl', $cache_id = null, $compile_id = null, $parent = null)
     {
-        $this->assign('uiMessages', $this->messages);
-        $this->assign('uiStylesheets', $this->stylesheets);
-        $this->assign('uiScripts', $this->scripts);
-        $this->assign('uiScriptSnippets', $this->scriptSnippets);
+        $this->assign([
+            'uiMessages' => $this->messages,
+            'uiStylesheets' => $this->stylesheets,
+            'uiScripts' => $this->scripts,
+            'uiScriptSnippets' => $this->scriptSnippets
+        ]);
         parent::display($template, $cache_id, $compile_id, $parent);
     }
 }

@@ -9,7 +9,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				<a id="header-logo" class="navbar-brand">
-					<span class="sr-only">{$headerLogoText|default: 'Home'}<span>
+					<span class="sr-only">{$headerLogoText|default: 'Home'}</span>
 				</a>
 			</div>
 			<div id="navigation-menu" class="collapse navbar-collapse">
