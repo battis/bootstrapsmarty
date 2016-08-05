@@ -276,7 +276,7 @@ class BootstrapSmarty extends \Smarty
      *
      * @param string $template Path to template directory
      * @param string $key (Optional) Unique identifier for template directory
-     * @return Smarty Current Smarty instance for chaining
+     * @return BootstrapSmarty Current Smarty instance for chaining
      */
     public function prependTemplateDir($template, $key = false) {
         $templates = $this->getTemplateDir();
