@@ -1,6 +1,7 @@
 # BootstrapSmarty
 
 [![Latest Version](https://img.shields.io/packagist/v/battis/bootstrapsmarty.svg)](https://packagist.org/packages/battis/bootstrapsmarty)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/battis/bootstrapsmarty/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/battis/bootstrapsmarty/?branch=master)
 
 A wrapper for Smarty to set (and maintain) defaults within a Bootstrap UI environment
 
