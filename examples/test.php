@@ -19,5 +19,5 @@ $ui->enable(BootstrapSmarty::MODULE_COLORPICKER);
 $ui->enable(BootstrapSmarty::MODULE_SORTABLE);
 
 $ui->display("form-page.tpl");
-	
+    
 ?>
