@@ -51,4 +51,4 @@ $smarty->addStylesheet('path/to/your/stylesheet.css');
 
 
 
-Complete [API documentation](https://htmlpreview.github.io/?https://raw.githubusercontent.com/battis/BootstrapSmarty/master/doc/namespaces/Battis.BootstrapSmarty.html) is included in the repo and the [Smarty API documentation](http://www.smarty.net/docs/en/) is also online.
+Complete [API documentation](https://battis.github.io/bootstrapsmarty/namespaces/Battis.BootstrapSmarty.html) is included in the repo and the [Smarty API documentation](http://www.smarty.net/docs/en/) is also online.
